@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
@@ -33,7 +33,7 @@ const ELEMENT_DATA: TableElements[] = [
   templateUrl: './torta-detail.component.html',
   styleUrl: './torta-detail.component.scss',
 })
-export default class TortaDetailComponent {
+export default class TortaDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
   displayedColumns: string[] = ['porciones', 'tamanio'];
   dataSource = ELEMENT_DATA;
@@ -210,67 +210,34 @@ export default class TortaDetailComponent {
   tortasByCategory: ITorta[] = [];
   categoryId: number | null = null;
   categoryStrId: string | null = '';
+  categoryStr: number = 0;
   tortaStrId: string | null = '';
-  isClosed: boolean = false;
   lblCategory: string = '';
   txtDesCategory: string = '';
   lblTorta: string = '';
-  txtDesTorta: string = '';
-  txtPriceTorta: number = 0;
-  txtImageTorta: string = '';
-  isClosedDetail: boolean = false;
   tortaId: number | null = null;
+  tortaDetail: ITorta | null = null;
 
   onGetTortasByCategory(categoryId: number) {
-    if (this.isClosed && this.categoryId == categoryId) {
-      this.isClosed = false;
-    } else {
-      this.isClosed = true;
-    }
     this.tortasByCategory = this.dataTorta.filter((t) => {
       return t.categoryId === categoryId;
     });
     //Guarda el valor de categoryId,sirve para luego verificar si hay algun cambio a otra categoryId
     this.categoryId = categoryId;
-    if (this.isClosed) {
-      this.lblTorta = '';
-      this.lblCategory = this.dataCategoria.find((c) => {
-        return c.id == categoryId;
-      })!.name;
-      this.txtDesCategory = this.dataCategoria.find((c) => {
-        return c.id == categoryId;
-      })!.description;
-    } else {
-      this.lblCategory = '';
-      this.txtDesCategory = '';
-    }
-    console.log(this.tortasByCategory);
+    this.lblTorta = '';
+    this.lblCategory = this.dataCategoria.find((c) => {
+      return c.id == categoryId;
+    })!.name;
+    this.txtDesCategory = this.dataCategoria.find((c) => {
+      return c.id == categoryId;
+    })!.description;
   }
   onGetTortaDetail(tortaId: number | null) {
-    if (this.isClosedDetail && this.tortaId == tortaId) {
-      this.isClosedDetail = false;
-    } else {
-      this.isClosedDetail = true;
-    }
-    //Guarda el valor de tortaId,sirve para luego verificar si hay algun cambio a otra tortaId
-    this.tortaId = tortaId;
-    if (tortaId) {
-      this.lblTorta = this.dataTorta.find((t) => {
-        return t.id == tortaId;
-      })!.name;
-      this.txtDesTorta = this.dataTorta.find((t) => {
-        return t.id == tortaId;
-      })!.description;
-      this.txtPriceTorta = this.dataTorta.find((t) => {
-        return t.id == tortaId;
-      })!.price;
-      this.txtImageTorta = this.dataTorta.find((t) => {
-        return t.id == tortaId;
-      })!.img;
-    } else {
-      this.lblTorta = '';
-    }
+    this.tortaDetail = this.dataTorta.find((t) => {
+      return t.id == tortaId;
+    })!;
   }
+
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
@@ -278,7 +245,16 @@ export default class TortaDetailComponent {
     this.tortaStrId = this.route.snapshot.paramMap.get('torta');
     this.lblCategory = this.categoryStrId!.split('-').join(' ');
     this.lblTorta = this.tortaStrId!.split('-').join(' ');
-    console.log(this.lblCategory, this.lblTorta);
+    this.categoryStr = this.dataCategoria.find((c) => {
+      return c.name.split(' ').join('-').toLowerCase() == this.categoryStrId;
+    })!.id;
+
+    this.tortaDetail = this.dataTorta.find((t) => {
+      return t.name.split(' ').join('-').toLowerCase() == this.tortaStrId;
+    })!;
+    this.tortasByCategory = this.dataTorta.filter((t) => {
+      return t.categoryId == this.categoryStr;
+    });
   }
 }
 
