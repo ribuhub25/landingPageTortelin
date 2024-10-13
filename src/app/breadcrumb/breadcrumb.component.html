@@ -1,0 +1,16 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+    @if(!category){
+      <li class="breadcrumb-item {{isActive}}">Catalogo</li>
+    }@else{
+      <li class="breadcrumb-item {{isActive}}"><a routerLink="/catalogo">Catalogo</a></li>
+      @if(!torta){
+        <li class="breadcrumb-item {{isActive}}" aria-current="page">{{category}}</li>
+      }@else {
+        <li class="breadcrumb-item {{isActive}}" aria-current="page"><a routerLink="{{category.split(' ').join('-').toLowerCase()}}">{{category}}</a></li>
+        <li class="breadcrumb-item {{isActive}}" aria-current="page">{{torta}}</li>
+      }
+    }
+  </ol>
+</nav>

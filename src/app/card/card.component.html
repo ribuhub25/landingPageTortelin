@@ -1,0 +1,21 @@
+<mat-card class="snap-card" appearance="outlined">
+  <!-- <mat-card-header>
+    <div mat-card-avatar class="snap-header-image"></div>
+  <mat-card-title>{{title}}</mat-card-title>
+    <mat-card-subtitle>{{type}}</mat-card-subtitle>
+  </mat-card-header> -->
+  <img mat-card-image src="{{image}}" alt="image-{{title}}">
+  <mat-card-content>
+    <!-- <p>
+      {{description}}
+    </p> -->
+    <div class="text-center">
+      <mat-card-title><a [routerLink]="['/catalogo'+ '/'+categoryName.split(' ').join('-').toLowerCase()+'/'+tortaName.split(' ').join('-').toLowerCase()]" (click)="this.cardEmitter.emit(this.id)">{{title}}</a></mat-card-title>
+      <div class="pt-2"><a [routerLink]="['/catalogo'+ '/'+categoryName.split(' ').join('-').toLowerCase()+'/'+tortaName.split(' ').join('-').toLowerCase()]" (click)="this.cardEmitter.emit(this.id)">Desde: {{price | currency:'S/.' }}</a></div>
+    </div>
+  </mat-card-content>
+  <!-- <mat-card-actions>
+    <button mat-button [disabled]="isValid" (click)="handleSubmit(id)">LIKE</button>
+    <button mat-button>SHARE</button>
+  </mat-card-actions> -->
+</mat-card>
