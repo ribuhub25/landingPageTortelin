@@ -254,6 +254,17 @@ export default class CategoriesComponent implements OnInit {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.categoryStrId = this.route.snapshot.paramMap.get('category');
+    if (this.categoryStrId) {
+      this.tortasByCategory = this.dataTorta.filter((t) => {
+        return (
+          t.categoryId ==
+          this.dataCategoria.find((c) => {
+            return c.name.split(' ').join('-').toLowerCase() == this.categoryStrId;
+          })?.id
+        );
+      });
+    }
     console.log(this.categoryStrId);
+    console.log(this.tortasByCategory);
   }
 }
