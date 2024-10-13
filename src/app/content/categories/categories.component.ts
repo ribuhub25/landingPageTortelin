@@ -1,20 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { ICategoria } from '../../models/categoria.interface';
 import { ITorta } from '../../models/torta.interface';
 import { MatListModule } from '@angular/material/list';
-import { RouterLink } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 import { BreadcrumbComponent } from '../../breadcrumb/breadcrumb.component';
 import { CardComponent } from '../../card/card.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-categories',
   standalone: true,
-  imports: [MatSidenavModule, MatListModule, RouterLink, BreadcrumbComponent, CardComponent],
+  imports: [
+    MatSidenavModule,
+    MatListModule,
+    RouterLink,
+    BreadcrumbComponent,
+    CardComponent,
+    RouterOutlet,
+  ],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })
-export class CategoriesComponent {
+export default class CategoriesComponent implements OnInit {
+  constructor(private route: ActivatedRoute) {}
   dataCategoria: ICategoria[] = [
     {
       id: 1,
@@ -181,6 +190,7 @@ export class CategoriesComponent {
   ];
   tortasByCategory: ITorta[] = [];
   categoryId: number | null = null;
+  categoryStrId: string | null = null;
   isClosed: boolean = false;
   lblCategory: string = '';
   txtDesCategory: string = '';
@@ -239,5 +249,11 @@ export class CategoriesComponent {
     } else {
       this.lblTorta = '';
     }
+  }
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.categoryStrId = this.route.snapshot.paramMap.get('category');
+    console.log(this.categoryStrId);
   }
 }

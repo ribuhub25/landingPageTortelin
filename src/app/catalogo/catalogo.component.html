@@ -3,40 +3,20 @@
     <h5>CATEGORIAS</h5>
     <mat-list role="list">
       @for(category of dataCategoria; track category.id){
-      <a [routerLink]="['/catalogo'+ '/' + category.name.split(' ').join('-').toLowerCase()]" (click)="onGetTortasByCategory(category.id)">
+      <a [routerLink]="['/catalogo', category.name.split(' ').join('-').toLowerCase()]" (click)="onGetTortasByCategory(category.id)">
         <h6>{{ category.name }}</h6>
       </a>
-      @if(category.id == categoryId && isClosed){
         @for(torta of tortasByCategory; track torta.id){
-        <a [routerLink]="['/catalogo'+ '/'+category.name.split(' ').join('-').toLowerCase()+'/'+torta.name.split(' ').join('-').toLowerCase()]" (click)="onGetTortaDetail(torta.id)"><mat-list-item role="listitem">
+        <a [routerLink]="['/'+category.name.split(' ').join('-').toLowerCase()+'/'+torta.name.split(' ').join('-').toLowerCase()]" (click)="onGetTortaDetail(torta.id)"><mat-list-item role="listitem">
           <span matListItemTitle>{{ torta.name }}</span>
         </mat-list-item>
         </a>
-      } } }
+       }
+      }
     </mat-list>
   </mat-drawer>
   <mat-drawer-content>
-    @if(!lblTorta){
-        <app-breadcrumb [category]="lblCategory" [torta]="lblTorta"></app-breadcrumb>
-      <h5>{{ lblCategory }}</h5>
-      @if(lblCategory != ""){
-      <p>{{txtDesCategory}}</p>
-      <div class="d-flex justify-content-center flex-wrap gap-2 py-3">
-        @for(crd of dataTorta; track crd.id){
-          @if(crd.categoryId == categoryId){
-            <snap-card [tortaName]="crd.name" [categoryName]="lblCategory" [title]="crd.name" [image]="crd.img" [price]="crd.price"(cardEmitter)="onGetTortaDetail($event)" ></snap-card>
-          }
-        }
-      </div>
-      }
-    }@else {
-      @if( !lblCategory && isClosedDetail){
-          <app-breadcrumb [category]="lblCategory" [torta]="lblTorta"></app-breadcrumb>
-      }@else {
-        <app-breadcrumb [category]="lblCategory" [torta]="lblTorta"></app-breadcrumb>
-      <app-torta-detail [price]="txtPriceTorta" [image]="txtImageTorta" [lblTorta]="lblTorta" [txtDesTorta]="txtDesTorta"></app-torta-detail>
-      }
-    }
+    <app-breadcrumb [category]="lblCategory" [torta]="lblTorta"></app-breadcrumb>
   </mat-drawer-content>
 </mat-drawer-container>
 

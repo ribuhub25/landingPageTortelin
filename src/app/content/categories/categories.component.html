@@ -1,14 +1,24 @@
+<mat-drawer-container class="example-container">
+  <mat-drawer mode="side" opened>
     <h5>CATEGORIAS</h5>
     <mat-list role="list">
       @for(category of dataCategoria; track category.id){
-      <a [routerLink]="['/catalogo'+ '/' + category.name.split(' ').join('-').toLowerCase()]" (click)="onGetTortasByCategory(category.id)">
+      <a [routerLink]="['/catalogo/'+category.name.split(' ').join('-').toLowerCase()]" (click)="onGetTortasByCategory(category.id)">
         <h6>{{ category.name }}</h6>
       </a>
-      @if(category.id == categoryId && isClosed){
+      @if(category.name.split(' ').join('-').toLowerCase() == categoryStrId){
         @for(torta of tortasByCategory; track torta.id){
-        <a [routerLink]="['/'+category.name.split(' ').join('-').toLowerCase()+'/'+torta.name.split(' ').join('-').toLowerCase()]" (click)="onGetTortaDetail(torta.id)"><mat-list-item role="listitem">
+        <a [routerLink]="['/catalogo/'+category.name.split(' ').join('-').toLowerCase()+'/'+torta.name.split(' ').join('-').toLowerCase()]" (click)="onGetTortaDetail(torta.id)"><mat-list-item role="listitem">
           <span matListItemTitle>{{ torta.name }}</span>
         </mat-list-item>
         </a>
       } } }
     </mat-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <app-breadcrumb [category]="lblCategory" [torta]="lblTorta"></app-breadcrumb>
+    Categories da
+  </mat-drawer-content>
+</mat-drawer-container>
+
+<router-outlet></router-outlet>

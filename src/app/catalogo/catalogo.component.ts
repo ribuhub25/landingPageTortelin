@@ -5,9 +5,7 @@ import { ITorta } from '../models/torta.interface';
 import { MatListModule } from '@angular/material/list';
 import { CardComponent } from '../card/card.component';
 import { BreadcrumbComponent } from "../breadcrumb/breadcrumb.component";
-import { TortaDetailComponent } from '../torta-detail/torta-detail.component';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { CategoriesComponent } from "../content/categories/categories.component";
 
 @Component({
   selector: 'app-catalogo',
@@ -17,15 +15,13 @@ import { CategoriesComponent } from "../content/categories/categories.component"
     MatListModule,
     CardComponent,
     BreadcrumbComponent,
-    TortaDetailComponent,
     RouterOutlet,
     RouterLink,
-    CategoriesComponent
 ],
   templateUrl: './catalogo.component.html',
   styleUrl: './catalogo.component.scss',
 })
-export class CatalogoComponent {
+export default class CatalogoComponent {
   dataCategoria: ICategoria[] = [
     {
       id: 1,
@@ -203,11 +199,11 @@ export class CatalogoComponent {
   tortaId: number | null = null;
 
   onGetTortasByCategory(categoryId: number) {
-    if (this.isClosed && this.categoryId == categoryId) {
-      this.isClosed = false;
-    } else {
-      this.isClosed = true;
-    }
+    // if (this.isClosed && this.categoryId == categoryId) {
+    //   this.isClosed = false;
+    // } else {
+    //   this.isClosed = true;
+    // }
     this.tortasByCategory = this.dataTorta.filter((t) => {
       return t.categoryId === categoryId;
     });

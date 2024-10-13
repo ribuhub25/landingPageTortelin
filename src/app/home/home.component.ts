@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CatalogoComponent } from '../catalogo/catalogo.component';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -9,6 +8,6 @@ import { RouterLink } from '@angular/router';
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent {
+export default class HomeComponent {
 
 }
