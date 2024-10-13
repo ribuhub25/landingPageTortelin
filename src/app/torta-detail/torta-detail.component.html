@@ -1,53 +1,74 @@
-<!-- <div class="row justify-content-center">
-  <div class="col-11 justify-content-center">
-    <h5>{{ lblTorta }}</h5>
-    <p>{{txtDesTorta}}</p>
-  </div>
-  <div class="col-8">
-    <img src="{{image}}" alt="image" width="100%"/>
-  </div>
-  <div class="col-3">
-    <div class="d-flex flex-column">
-      <div>
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-          <ng-container matColumnDef="porciones">
-            <th mat-header-cell *matHeaderCellDef>Porciones</th>
-            <td mat-cell *matCellDef="let element">{{ element.porciones }}</td>
-          </ng-container>
-          <ng-container matColumnDef="tamanio">
-            <th mat-header-cell *matHeaderCellDef>Tamaño</th>
-            <td mat-cell *matCellDef="let element">{{ element.tamanio }}</td>
-          </ng-container>
-          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
-      </div>
-      <div class="pt-2">
-        <p>PRECIO: <span>Desde {{ price | currency: "S/." }}</span></p>
-      </div>
-    </div>
-  </div>
-</div> -->
 <mat-drawer-container class="example-container">
   <mat-drawer mode="side" opened>
     <h5>CATEGORIAS</h5>
     <mat-list role="list">
       @for(category of dataCategoria; track category.id){
-      <a [routerLink]="['/catalogo'+ '/' + category.name.split(' ').join('-').toLowerCase()]" (click)="onGetTortasByCategory(category.id)">
+      <a
+        [routerLink]="[
+          '/catalogo' + '/' + category.name.split(' ').join('-').toLowerCase()
+        ]"
+        (click)="onGetTortasByCategory(category.id)"
+      >
         <h6>{{ category.name }}</h6>
       </a>
-      @if(category.id == categoryId && isClosed){
-        @for(torta of tortasByCategory; track torta.id){
-        <a [routerLink]="['/catalogo/'+category.name.split(' ').join('-').toLowerCase()+'/'+torta.name.split(' ').join('-').toLowerCase()]" (click)="onGetTortaDetail(torta.id)"><mat-list-item role="listitem">
+      @if(category.id == categoryId && isClosed){ @for(torta of
+      tortasByCategory; track torta.id){
+      <a
+        [routerLink]="[
+          '/catalogo/' +
+            category.name.split(' ').join('-').toLowerCase() +
+            '/' +
+            torta.name.split(' ').join('-').toLowerCase()
+        ]"
+        (click)="onGetTortaDetail(torta.id)"
+        ><mat-list-item role="listitem">
           <span matListItemTitle>{{ torta.name }}</span>
         </mat-list-item>
-        </a>
+      </a>
       } } }
     </mat-list>
   </mat-drawer>
   <mat-drawer-content>
-    <app-breadcrumb [category]="lblCategory" [torta]="lblTorta"></app-breadcrumb>
-    Detalle
+    <app-breadcrumb
+      [category]="lblCategory"
+      [torta]="lblTorta"
+    ></app-breadcrumb>
+    <div class="row justify-content-center">
+      <div class="col-11 justify-content-center">
+        <h5>{{ lblTorta }}</h5>
+        <p>{{ txtDesTorta }}</p>
+      </div>
+      <div class="col-8">
+        <img src="{{ image }}" alt="image" width="100%" />
+      </div>
+      <div class="col-3">
+        <div class="d-flex flex-column">
+          <div>
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+              <ng-container matColumnDef="porciones">
+                <th mat-header-cell *matHeaderCellDef>Porciones</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.porciones }}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="tamanio">
+                <th mat-header-cell *matHeaderCellDef>Tamaño</th>
+                <td mat-cell *matCellDef="let element">
+                  {{ element.tamanio }}
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+          </div>
+          <div class="pt-2">
+            <p>
+              PRECIO: <span>Desde {{ price | currency : "S/." }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </mat-drawer-content>
 </mat-drawer-container>
 

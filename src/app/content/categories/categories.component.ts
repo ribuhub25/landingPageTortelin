@@ -191,6 +191,7 @@ export default class CategoriesComponent implements OnInit {
   tortasByCategory: ITorta[] = [];
   categoryId: number | null = null;
   categoryStrId: string | null = null;
+  categoryStr: number | undefined = 0;
   isClosed: boolean = false;
   lblCategory: string = '';
   txtDesCategory: string = '';
@@ -200,30 +201,21 @@ export default class CategoriesComponent implements OnInit {
   txtImageTorta: string = '';
   isClosedDetail: boolean = false;
   tortaId: number | null = null;
+
   onGetTortasByCategory(categoryId: number) {
-    if (this.isClosed && this.categoryId == categoryId) {
-      this.isClosed = false;
-    } else {
-      this.isClosed = true;
-    }
+    this.categoryStrId = null;
+    this.categoryStr = undefined;
     this.tortasByCategory = this.dataTorta.filter((t) => {
       return t.categoryId === categoryId;
     });
     //Guarda el valor de categoryId,sirve para luego verificar si hay algun cambio a otra categoryId
     this.categoryId = categoryId;
-    if (this.isClosed) {
-      this.lblTorta = '';
-      this.lblCategory = this.dataCategoria.find((c) => {
-        return c.id == categoryId;
-      })!.name;
-      this.txtDesCategory = this.dataCategoria.find((c) => {
-        return c.id == categoryId;
-      })!.description;
-    } else {
-      this.lblCategory = '';
-      this.txtDesCategory = '';
-    }
-    console.log(this.tortasByCategory);
+    this.lblCategory = this.dataCategoria.find((c) => {
+      return c.id == categoryId;
+    })!.name;
+    this.txtDesCategory = this.dataCategoria.find((c) => {
+      return c.id == categoryId;
+    })!.description;
   }
   onGetTortaDetail(tortaId: number | null) {
     if (this.isClosedDetail && this.tortaId == tortaId) {
@@ -254,17 +246,14 @@ export default class CategoriesComponent implements OnInit {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
     this.categoryStrId = this.route.snapshot.paramMap.get('category');
+    this.categoryStr = this.dataCategoria.find((c) => {
+      return c.name.split(' ').join('-').toLowerCase() == this.categoryStrId;
+    })!.id;
     if (this.categoryStrId) {
       this.tortasByCategory = this.dataTorta.filter((t) => {
-        return (
-          t.categoryId ==
-          this.dataCategoria.find((c) => {
-            return c.name.split(' ').join('-').toLowerCase() == this.categoryStrId;
-          })?.id
-        );
+        return t.categoryId == this.categoryStr;
       });
+      this.lblCategory = this.categoryStrId.split('-').join(' ');
     }
-    console.log(this.categoryStrId);
-    console.log(this.tortasByCategory);
   }
 }

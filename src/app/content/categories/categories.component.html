@@ -4,20 +4,38 @@
     <mat-list role="list">
       @for(category of dataCategoria; track category.id){
       <a [routerLink]="['/catalogo/'+category.name.split(' ').join('-').toLowerCase()]" (click)="onGetTortasByCategory(category.id)">
-        <h6>{{ category.name }}</h6>
+      <h6>{{ category.name }}</h6>
       </a>
-      @if(category.name.split(' ').join('-').toLowerCase() == categoryStrId){
+      @if(category.id == categoryId ){
         @for(torta of tortasByCategory; track torta.id){
         <a [routerLink]="['/catalogo/'+category.name.split(' ').join('-').toLowerCase()+'/'+torta.name.split(' ').join('-').toLowerCase()]" (click)="onGetTortaDetail(torta.id)"><mat-list-item role="listitem">
           <span matListItemTitle>{{ torta.name }}</span>
         </mat-list-item>
         </a>
-      } } }
+        }
+      }@else {
+        @if(category.id == categoryStr){
+          @for(torta of tortasByCategory; track torta.id){
+          <a [routerLink]="['/catalogo/'+category.name.split(' ').join('-').toLowerCase()+'/'+torta.name.split(' ').join('-').toLowerCase()]" (click)="onGetTortaDetail(torta.id)"><mat-list-item role="listitem">
+            <span matListItemTitle>{{ torta.name }}</span>
+          </mat-list-item>
+          </a>
+          }
+        }
+      }
+    }
     </mat-list>
   </mat-drawer>
   <mat-drawer-content>
     <app-breadcrumb [category]="lblCategory" [torta]="lblTorta"></app-breadcrumb>
-    Categories da
+    <div class="d-flex justify-content-center flex-wrap gap-2 py-3">
+      @for(crd of dataTorta; track crd.id){
+          @if(crd.categoryId == categoryId || crd.categoryId == categoryStr){
+            <snap-card [tortaName]="crd.name" [categoryName]="lblCategory" [title]="crd.name" [image]="crd.img" [price]="crd.price"(cardEmitter)="onGetTortaDetail($event)" ></snap-card>
+          }
+      }
+    </div>
+
   </mat-drawer-content>
 </mat-drawer-container>
 

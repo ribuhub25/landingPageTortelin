@@ -6,7 +6,8 @@ import { BreadcrumbComponent } from '../breadcrumb/breadcrumb.component';
 import { MatListModule } from '@angular/material/list';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { ITorta } from '../models/torta.interface';
-import {ICategoria} from '../models/categoria.interface';
+import { ICategoria } from '../models/categoria.interface';
+import { ActivatedRoute } from '@angular/router';
 
 export interface TableElements{
   porciones: string;
@@ -33,6 +34,7 @@ const ELEMENT_DATA: TableElements[] = [
   styleUrl: './torta-detail.component.scss',
 })
 export default class TortaDetailComponent {
+  constructor(private route: ActivatedRoute) {}
   displayedColumns: string[] = ['porciones', 'tamanio'];
   dataSource = ELEMENT_DATA;
   @Input() price: number = 0;
@@ -207,6 +209,8 @@ export default class TortaDetailComponent {
   ];
   tortasByCategory: ITorta[] = [];
   categoryId: number | null = null;
+  categoryStrId: string | null = '';
+  tortaStrId: string | null = '';
   isClosed: boolean = false;
   lblCategory: string = '';
   txtDesCategory: string = '';
@@ -266,6 +270,15 @@ export default class TortaDetailComponent {
     } else {
       this.lblTorta = '';
     }
+  }
+  ngOnInit(): void {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    this.categoryStrId = this.route.snapshot.paramMap.get('category');
+    this.tortaStrId = this.route.snapshot.paramMap.get('torta');
+    this.lblCategory = this.categoryStrId!.split('-').join(' ');
+    this.lblTorta = this.tortaStrId!.split('-').join(' ');
+    console.log(this.lblCategory, this.lblTorta);
   }
 }
 

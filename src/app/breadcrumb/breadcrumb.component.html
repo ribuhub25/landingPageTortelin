@@ -8,7 +8,7 @@
       @if(!torta){
         <li class="breadcrumb-item {{isActive}}" aria-current="page">{{category}}</li>
       }@else {
-        <li class="breadcrumb-item {{isActive}}" aria-current="page"><a routerLink="{{category.split(' ').join('-').toLowerCase()}}">{{category}}</a></li>
+        <li class="breadcrumb-item {{isActive}}" aria-current="page"><a [routerLink]="['/catalogo/'+category.split(' ').join('-').toLowerCase()]">{{category}}</a></li>
         <li class="breadcrumb-item {{isActive}}" aria-current="page">{{torta}}</li>
       }
     }
