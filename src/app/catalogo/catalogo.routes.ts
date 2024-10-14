@@ -11,7 +11,7 @@ export const routes: Routes = [
   },
   {
     path: ':category/:torta',
-    loadComponent: () => import('../torta-detail/torta-detail.component'),
+    loadComponent: () => import('../content/torta-detail/torta-detail.component'),
   },
 ];
 

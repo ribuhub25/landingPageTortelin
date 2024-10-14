@@ -7,6 +7,8 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { BreadcrumbComponent } from '../../breadcrumb/breadcrumb.component';
 import { CardComponent } from '../../card/card.component';
 import { ActivatedRoute } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-categories',
@@ -18,6 +20,8 @@ import { ActivatedRoute } from '@angular/router';
     BreadcrumbComponent,
     CardComponent,
     RouterOutlet,
+    MatIcon,
+    MatButtonModule,
   ],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
