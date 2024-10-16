@@ -6,6 +6,9 @@ import { MatListModule } from '@angular/material/list';
 import { CardComponent } from '../card/card.component';
 import { BreadcrumbComponent } from "../breadcrumb/breadcrumb.component";
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { NavBarComponent } from '../nav-bar/nav-bar.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-catalogo',
@@ -17,7 +20,10 @@ import { RouterLink, RouterOutlet } from '@angular/router';
     BreadcrumbComponent,
     RouterOutlet,
     RouterLink,
-],
+    NavBarComponent,
+    MatIconModule,
+    MatButtonModule,
+  ],
   templateUrl: './catalogo.component.html',
   styleUrl: './catalogo.component.scss',
 })

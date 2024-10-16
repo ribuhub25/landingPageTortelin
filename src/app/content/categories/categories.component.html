@@ -1,41 +1,132 @@
+<nav class="navbar navbar-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" routerLink="/">
+      <img
+        src="asset/logo.png"
+        alt=""
+        width="30"
+        height="24"
+        class="d-inline-block align-text-top"
+      />
+      Tortelín
+    </a>
+    <ul class="navbar-nav d-flex flex-row gap-4">
+      <li class="nav-item">
+        <a
+          class="nav-link active"
+          aria-current="page"
+          [routerLink]="['/catalogo']"
+          >Catálogo</a
+        >
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="#">Nosotros</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="#">Servicios</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="#">Locales</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="#">Contacto</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="#"
+          >Delivery 🚚 971 147 072</a
+        >
+      </li>
+      <li class="nav-item">
+        <button mat-icon-button class="favorite-icon" (click)="[drawer.toggle(),drawer2.toggle(false)]">
+          <mat-icon matBadgeColor="accent" aria-hidden="false"
+            >shopping_cart</mat-icon
+          >
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>
+
 <mat-drawer-container class="example-container">
-  <mat-drawer mode="side" opened>
-    <h5>CATEGORIAS</h5>
+  <mat-drawer #drawer2 mode="side" class="categories-container" opened>
+    <h6 class="fw-bold">CATEGORIAS</h6>
     <mat-list role="list">
       @for(category of dataCategoria; track category.id){
-      <a [routerLink]="['/catalogo/'+category.name.split(' ').join('-').toLowerCase()]" (click)="onGetTortasByCategory(category.id)">
-      <h6>{{ category.name }}</h6>
+      <a
+        [routerLink]="[
+          '/catalogo/' + category.name.split(' ').join('-').toLowerCase()
+        ]"
+        (click)="onGetTortasByCategory(category.id)"
+      >
+        <h6>{{ category.name }}</h6>
       </a>
-      @if(category.id == categoryId ){
-        @for(torta of tortasByCategory; track torta.id){
-        <a [routerLink]="['/catalogo/'+category.name.split(' ').join('-').toLowerCase()+'/'+torta.name.split(' ').join('-').toLowerCase()]" (click)="onGetTortaDetail(torta.id)"><mat-list-item role="listitem">
+      @if(category.id == categoryId ){ @for(torta of tortasByCategory; track
+      torta.id){
+      <a
+        [routerLink]="[
+          '/catalogo/' +
+            category.name.split(' ').join('-').toLowerCase() +
+            '/' +
+            torta.name.split(' ').join('-').toLowerCase()
+        ]"
+        (click)="onGetTortaDetail(torta.id)"
+        ><mat-list-item role="listitem">
           <span matListItemTitle>{{ torta.name }}</span>
         </mat-list-item>
-        </a>
-        }
-      }@else {
-        @if(category.id == categoryStr){
-          @for(torta of tortasByCategory; track torta.id){
-          <a [routerLink]="['/catalogo/'+category.name.split(' ').join('-').toLowerCase()+'/'+torta.name.split(' ').join('-').toLowerCase()]" (click)="onGetTortaDetail(torta.id)"><mat-list-item role="listitem">
-            <span matListItemTitle>{{ torta.name }}</span>
-          </mat-list-item>
-          </a>
-          }
-        }
-      }
-    }
+      </a>
+      } }@else { @if(category.id == categoryStr){ @for(torta of
+      tortasByCategory; track torta.id){
+      <a
+        [routerLink]="[
+          '/catalogo/' +
+            category.name.split(' ').join('-').toLowerCase() +
+            '/' +
+            torta.name.split(' ').join('-').toLowerCase()
+        ]"
+        (click)="onGetTortaDetail(torta.id)"
+        ><mat-list-item role="listitem">
+          <span matListItemTitle>{{ torta.name }}</span>
+        </mat-list-item>
+      </a>
+      } } } }
     </mat-list>
   </mat-drawer>
+  <mat-drawer #drawer class="hijo-sidenav" mode="side" position="end">
+    <p>Auto-resizing sidenav</p>
+  </mat-drawer>
   <mat-drawer-content>
-    <app-breadcrumb [category]="lblCategory" [torta]="lblTorta"></app-breadcrumb>
-    <div class="d-flex justify-content-center flex-wrap gap-2 py-3">
-      @for(crd of dataTorta; track crd.id){
-          @if(crd.categoryId == categoryId || crd.categoryId == categoryStr){
-            <snap-card [tortaName]="crd.name" [categoryName]="lblCategory" [title]="crd.name" [image]="crd.img" [price]="crd.price"(cardEmitter)="onGetTortaDetail($event)" ></snap-card>
-          }
-      }
+    <div class="d-flex justify-content-start gap-2">
+      <div>
+        <button
+          mat-icon-button
+          class="favorite-icon"
+          (click)="drawer2.toggle()"
+        >
+          <mat-icon matBadgeColor="accent" aria-hidden="false"
+            >menu</mat-icon
+          >
+        </button>
+      </div>
+      <div class="pt-2"><app-breadcrumb
+      [category]="lblCategory"
+      [torta]="lblTorta"
+    ></app-breadcrumb></div>
     </div>
 
+
+    <div class="d-flex justify-content-center flex-wrap gap-2 py-3">
+      @for(crd of dataTorta; track crd.id){ @if(crd.categoryId == categoryId ||
+      crd.categoryId == categoryStr){
+      <snap-card
+        [tortaName]="crd.name"
+        [categoryName]="lblCategory"
+        [title]="crd.name"
+        [image]="crd.img"
+        [price]="crd.price"
+        (cardEmitter)="onGetTortaDetail($event)"
+      ></snap-card>
+      } }
+    </div>
   </mat-drawer-content>
 </mat-drawer-container>
 

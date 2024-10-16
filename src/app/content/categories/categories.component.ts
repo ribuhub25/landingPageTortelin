@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { ICategoria } from '../../models/categoria.interface';
 import { ITorta } from '../../models/torta.interface';
 import { MatListModule } from '@angular/material/list';
@@ -9,6 +9,7 @@ import { CardComponent } from '../../card/card.component';
 import { ActivatedRoute } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
+import { NavBarComponent } from '../../nav-bar/nav-bar.component';
 
 @Component({
   selector: 'app-categories',
@@ -22,6 +23,7 @@ import { MatIcon } from '@angular/material/icon';
     RouterOutlet,
     MatIcon,
     MatButtonModule,
+    NavBarComponent,
   ],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
@@ -259,5 +261,11 @@ export default class CategoriesComponent implements OnInit {
       });
       this.lblCategory = this.categoryStrId.split('-').join(' ');
     }
+  }
+  drawer: MatDrawer | null = null;
+  drawer2: MatDrawer | null = null;
+  functionShowCart() {
+    this.drawer?.toggle();
+    this.drawer2?.toggle(false);
   }
 }

@@ -8,6 +8,9 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { ITorta } from '../../models/torta.interface';
 import { ICategoria } from '../../models/categoria.interface';
 import { ActivatedRoute } from '@angular/router';
+import { NavBarComponent } from '../../nav-bar/nav-bar.component';
+import { MatIcon } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 export interface TableElements{
   porciones: string;
@@ -29,6 +32,9 @@ const ELEMENT_DATA: TableElements[] = [
     RouterOutlet,
     RouterLink,
     MatListModule,
+    NavBarComponent,
+    MatIcon,
+    MatButtonModule,
   ],
   templateUrl: './torta-detail.component.html',
   styleUrl: './torta-detail.component.scss',
