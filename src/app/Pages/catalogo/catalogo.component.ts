@@ -1,5 +1,5 @@
-import { Component, OnInit,inject } from '@angular/core';
-import { MatSidenavModule } from '@angular/material/sidenav';
+import { Component, ElementRef, OnInit,ViewChild,inject } from '@angular/core';
+import { MatDrawer, MatDrawerToggleResult, MatSidenavModule } from '@angular/material/sidenav';
 import { ICategoria } from '../../models/categoria.interface';
 import { ITorta } from '../../models/torta.interface';
 import { MatListModule } from '@angular/material/list';
@@ -11,6 +11,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { CartService } from '../../Services/cart.service';
 import { ITortaDetail } from '../../Services/models/cart.interface';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @Component({
   selector: 'app-catalogo',
@@ -25,6 +26,7 @@ import { ITortaDetail } from '../../Services/models/cart.interface';
     NavBarComponent,
     MatIconModule,
     MatButtonModule,
+    MatBadgeModule
   ],
   templateUrl: './catalogo.component.html',
   styleUrl: './catalogo.component.scss',
@@ -289,4 +291,6 @@ export default class CatalogoComponent implements OnInit {
     //this._cartService.productsObservable$.unsubscribe();
     this._cartService.clearAll();
   }
+  //CAPTURANDO EL ELEMENTO DRAWER
+
 }

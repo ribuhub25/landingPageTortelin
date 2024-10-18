@@ -13,34 +13,33 @@
     <ul class="navbar-nav d-flex flex-row gap-4">
       <li class="nav-item">
         <a
-          class="nav-link active"
+          class= "nav-link"
+          [ngClass]="{'activedColor': isActive}"
           aria-current="page"
           [routerLink]="['/catalogo']"
-          >Catálogo</a
+          >Catalogo</a
         >
       </li>
       <li class="nav-item">
         <a class="nav-link" aria-current="page" href="#">Nosotros</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="#">Servicios</a>
+        <a class="nav-link {isActive}" aria-current="page" href="#">Servicios</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="#">Locales</a>
+        <a class="nav-link {isActive}" aria-current="page" href="#">Locales</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="#">Contacto</a>
+        <a class="nav-link {isActive}" aria-current="page" href="#">Contacto</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="#"
+        <a class="nav-link {isActive}" aria-current="page" href="#"
           >Delivery 🚚 971 147 072</a
         >
       </li>
       <li class="nav-item">
-        <button mat-icon-button class="favorite-icon">
-          <mat-icon
-            matBadgeColor="accent"
-            aria-hidden="false"
+        <button mat-icon-button class="favorite-icon" (click)="ToggleCart()">
+          <mat-icon [matBadge]="count" matBadgeColor="accent" aria-hidden="false"
             >shopping_cart</mat-icon
           >
         </button>

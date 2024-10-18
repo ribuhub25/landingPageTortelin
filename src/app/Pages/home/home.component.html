@@ -1,1 +1,11 @@
-<app-nav-bar></app-nav-bar>
+<app-nav-bar [drawer]="drawer"></app-nav-bar>
+
+<mat-drawer-container class="example-container">
+  <mat-drawer #drawer class="hijo-sidenav" mode="side" position="end">
+    <p>Auto-resizing sidenav</p>
+  </mat-drawer>
+  <mat-drawer-content>
+    Holaaa
+  </mat-drawer-content>
+</mat-drawer-container>
+
