@@ -2,13 +2,13 @@ import { Component, Input, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
-import { BreadcrumbComponent } from '../../breadcrumb/breadcrumb.component';
+import { BreadcrumbComponent } from '../../Components/breadcrumb/breadcrumb.component';
 import { MatListModule } from '@angular/material/list';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { ITorta } from '../../models/torta.interface';
 import { ICategoria } from '../../models/categoria.interface';
 import { ActivatedRoute } from '@angular/router';
-import { NavBarComponent } from '../../nav-bar/nav-bar.component';
+import { NavBarComponent } from '../../Components/nav-bar/nav-bar.component';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 

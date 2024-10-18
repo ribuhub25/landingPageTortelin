@@ -7,11 +7,11 @@ export const routes: Routes = [
   },
   {
     path: ':category',
-    loadComponent: () => import('../content/categories/categories.component'),
+    loadComponent: () => import('../../content/categories/categories.component'),
   },
   {
     path: ':category/:torta',
-    loadComponent: () => import('../content/torta-detail/torta-detail.component'),
+    loadComponent: () => import('../../content/torta-detail/torta-detail.component'),
   },
 ];
 

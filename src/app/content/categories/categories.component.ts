@@ -1,15 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { ICategoria } from '../../models/categoria.interface';
 import { ITorta } from '../../models/torta.interface';
 import { MatListModule } from '@angular/material/list';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { BreadcrumbComponent } from '../../breadcrumb/breadcrumb.component';
-import { CardComponent } from '../../card/card.component';
+import { BreadcrumbComponent } from '../../Components/breadcrumb/breadcrumb.component';
+import { CardComponent } from '../../Components/card/card.component';
 import { ActivatedRoute } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
-import { NavBarComponent } from '../../nav-bar/nav-bar.component';
+import { NavBarComponent } from '../../Components/nav-bar/nav-bar.component';
+import { CartService } from '../../Services/cart.service';
+import { ITortaDetail } from '../../Services/models/cart.interface';
+import { AsyncPipe, CommonModule } from '@angular/common';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @Component({
   selector: 'app-categories',
@@ -22,8 +26,11 @@ import { NavBarComponent } from '../../nav-bar/nav-bar.component';
     CardComponent,
     RouterOutlet,
     MatIcon,
+    MatBadgeModule,
     MatButtonModule,
     NavBarComponent,
+    AsyncPipe,
+    CommonModule
   ],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
@@ -261,11 +268,43 @@ export default class CategoriesComponent implements OnInit {
       });
       this.lblCategory = this.categoryStrId.split('-').join(' ');
     }
+    //SERVICIO
+    this._cartService.cartObservable$.subscribe({
+      next: (number) => {
+        this.count = number;
+      },
+    });
+    this._cartService.tortasObservable$.subscribe({
+      next: (tortaDetail) => {
+        this.tortasSeleccionados = tortaDetail;
+        console.log(tortaDetail);
+      },
+    });
   }
   drawer: MatDrawer | null = null;
   drawer2: MatDrawer | null = null;
   functionShowCart() {
     this.drawer?.toggle();
     this.drawer2?.toggle(false);
+  }
+
+  //SERVICIO
+  private readonly _cartService = inject(CartService);
+
+  count = 0;
+  tortasSeleccionados: ITortaDetail[] = [];
+
+  onClickAdd(torta: ITortaDetail) {
+    this._cartService.addProductfromButton(torta);
+  }
+  onClickDelete(index: number) {
+    this._cartService.deleteProduct(index);
+  }
+  onClickReset(torta: ITortaDetail) {
+    this._cartService.resetProduct(torta);
+  }
+  onClickClear() {
+    //this._cartService.productsObservable$.unsubscribe();
+    this._cartService.clearAll();
   }
 }

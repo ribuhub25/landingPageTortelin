@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { CardComponent } from './card/card.component';
+import { CardComponent } from './Components/card/card.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIcon } from '@angular/material/icon';
 import { MatSidenavModule } from '@angular/material/sidenav';

@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit,inject } from '@angular/core';
 import { MatSidenavModule } from '@angular/material/sidenav';
-import { ICategoria } from '../models/categoria.interface';
-import { ITorta } from '../models/torta.interface';
+import { ICategoria } from '../../models/categoria.interface';
+import { ITorta } from '../../models/torta.interface';
 import { MatListModule } from '@angular/material/list';
-import { CardComponent } from '../card/card.component';
-import { BreadcrumbComponent } from "../breadcrumb/breadcrumb.component";
+import { CardComponent } from '../../Components/card/card.component';
+import { BreadcrumbComponent } from "../../Components/breadcrumb/breadcrumb.component";
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { NavBarComponent } from '../nav-bar/nav-bar.component';
+import { NavBarComponent } from '../../Components/nav-bar/nav-bar.component';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { CartService } from '../../Services/cart.service';
+import { ITortaDetail } from '../../Services/models/cart.interface';
 
 @Component({
   selector: 'app-catalogo',
@@ -27,7 +29,7 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './catalogo.component.html',
   styleUrl: './catalogo.component.scss',
 })
-export default class CatalogoComponent {
+export default class CatalogoComponent implements OnInit {
   dataCategoria: ICategoria[] = [
     {
       id: 1,
@@ -253,5 +255,38 @@ export default class CatalogoComponent {
     } else {
       this.lblTorta = '';
     }
+  }
+
+  //SERVICIO
+  private readonly _cartService = inject(CartService);
+
+  count = 0;
+  tortasSeleccionados: ITortaDetail[] = [];
+
+  ngOnInit(): void {
+    this._cartService.cartObservable$.subscribe({
+      next: (number) => {
+        this.count = number;
+      },
+    });
+    this._cartService.tortasObservable$.subscribe({
+      next: (tortaDetail) => {
+        this.tortasSeleccionados = tortaDetail;
+        console.log(tortaDetail);
+      },
+    });
+  }
+  onClickAdd(torta: ITortaDetail) {
+    this._cartService.addProductfromButton(torta);
+  }
+  onClickDelete(index: number) {
+    this._cartService.deleteProduct(index);
+  }
+  onClickReset(torta: ITortaDetail) {
+    this._cartService.resetProduct(torta);
+  }
+  onClickClear() {
+    //this._cartService.productsObservable$.unsubscribe();
+    this._cartService.clearAll();
   }
 }

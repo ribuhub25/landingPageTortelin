@@ -38,7 +38,7 @@
       </li>
       <li class="nav-item">
         <button mat-icon-button class="favorite-icon" (click)="[drawer.toggle(),drawer2.toggle(false)]">
-          <mat-icon matBadgeColor="accent" aria-hidden="false"
+          <mat-icon [matBadge]="count"  matBadgeColor="accent" aria-hidden="false"
             >shopping_cart</mat-icon
           >
         </button>
@@ -92,7 +92,47 @@
     </mat-list>
   </mat-drawer>
   <mat-drawer #drawer class="hijo-sidenav" mode="side" position="end">
-    <p>Auto-resizing sidenav</p>
+    <mat-list style="text-align: center; max-width: 35vw;">
+        <div mat-subheader><b>Productos seleccionados</b></div>
+        <div style="display: flex; flex-direction: row; align-items: baseline; justify-content: center;">
+          <div mat-subheader>Total Productos: {{ count }}</div>
+          <!-- <div mat-subheader><app-total /></div> -->
+          <button mat-button color="primary" (click)="onClickClear()">
+            Clear All
+          </button>
+        </div>
+        @for (torta of tortasSeleccionados ; track torta.torta.id;) {
+        <img src="{{ torta.torta.img }}" width="150" />
+        <mat-list-item>
+          <span matListItemTitle
+            ><div>
+              {{ torta.torta.name }}
+            </div></span
+          >
+          <span matListItemLine
+            >Cantidad Seleccionada: {{ torta.count }}</span
+          >
+          <span matListItemLine
+            >Coste Total:
+            {{ torta.total | currency: "S/. " }}</span
+          >
+          <button mat-button color="primary" (click)="onClickAdd(torta)">
+            Add Product
+          </button>
+          <button
+            mat-button
+            color="warn"
+            (click)="onClickDelete(torta.torta.id)"
+          >
+            Delete Product
+          </button>
+          <button mat-button color="secondary" (click)="onClickReset(torta)">
+            Reset
+          </button>
+        </mat-list-item>
+        <br>
+        }
+      </mat-list>
   </mat-drawer>
   <mat-drawer-content>
     <div class="d-flex justify-content-start gap-2">
@@ -118,11 +158,8 @@
       @for(crd of dataTorta; track crd.id){ @if(crd.categoryId == categoryId ||
       crd.categoryId == categoryStr){
       <snap-card
-        [tortaName]="crd.name"
+        [torta]="crd"
         [categoryName]="lblCategory"
-        [title]="crd.name"
-        [image]="crd.img"
-        [price]="crd.price"
         (cardEmitter)="onGetTortaDetail($event)"
       ></snap-card>
       } }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { NavBarComponent } from "../nav-bar/nav-bar.component";
+import { NavBarComponent } from "../../Components/nav-bar/nav-bar.component";
 
 @Component({
   selector: 'app-home',
