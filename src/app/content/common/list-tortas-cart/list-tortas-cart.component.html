@@ -1,0 +1,41 @@
+<mat-list style="text-align: center; max-width: 35vw; font-size: small;">
+  <div mat-subheader><b>Productos seleccionados</b></div>
+  <div
+    style="
+      display: flex;
+      flex-direction: row;
+      align-items: baseline;
+      justify-content: center;
+    "
+  >
+    <div mat-subheader>Total Productos: {{ count }}</div>
+    <div mat-subheader><app-total /></div>
+    <button mat-button color="primary" (click)="onClickClear()">
+      Clear All
+    </button>
+  </div>
+  @for (torta of tortasSeleccionados ; track torta.torta.id;) {
+  <img src="{{ torta.torta.img }}" width="150" />
+  <mat-list-item>
+    <span matListItemTitle
+      ><div>
+        {{ torta.torta.name }}
+      </div></span
+    >
+    <span matListItemLine>Cantidad Seleccionada: {{ torta.count }}</span>
+    <span matListItemLine
+      >Coste Total: {{ torta.total | currency : "S/. " }}</span
+    >
+    <button mat-button color="primary" (click)="onClickAdd(torta)">
+      Add Product
+    </button>
+    <button mat-button color="warn" (click)="onClickDelete(torta.torta.id)">
+      Delete Product
+    </button>
+    <button mat-button color="secondary" (click)="onClickReset(torta)">
+      Reset
+    </button>
+  </mat-list-item>
+  <br />
+  }
+</mat-list>

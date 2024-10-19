@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
@@ -11,6 +11,9 @@ import { ActivatedRoute } from '@angular/router';
 import { NavBarComponent } from '../../Components/nav-bar/nav-bar.component';
 import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { ListTortasCartComponent } from '../common/list-tortas-cart/list-tortas-cart.component';
+import { ITortaDetail } from '../../Services/models/cart.interface';
+import { CartService } from '../../Services/cart.service';
 
 export interface TableElements{
   porciones: string;
@@ -35,19 +38,18 @@ const ELEMENT_DATA: TableElements[] = [
     NavBarComponent,
     MatIcon,
     MatButtonModule,
+    ListTortasCartComponent,
   ],
   templateUrl: './torta-detail.component.html',
   styleUrl: './torta-detail.component.scss',
 })
 export default class TortaDetailComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
+  private readonly _cartService = inject(CartService);
   displayedColumns: string[] = ['porciones', 'tamanio'];
   dataSource = ELEMENT_DATA;
   @Input() price: number = 0;
   @Input() image: string = '';
-  // @Input() lblTorta: string = '';
-  // @Input() txtDesTorta: string = '';
-  // lblCategory: string = '';
 
   dataCategoria: ICategoria[] = [
     {
@@ -224,6 +226,9 @@ export default class TortaDetailComponent implements OnInit {
   tortaId: number | null = null;
   tortaDetail: ITorta | null = null;
 
+  count = 0;
+  tortasCarrito: ITortaDetail[] = [];
+
   onGetTortasByCategory(categoryId: number) {
     this.tortasByCategory = this.dataTorta.filter((t) => {
       return t.categoryId === categoryId;
@@ -261,6 +266,10 @@ export default class TortaDetailComponent implements OnInit {
     this.tortasByCategory = this.dataTorta.filter((t) => {
       return t.categoryId == this.categoryStr;
     });
+
+    //ACTUALIZAR EL CONTADOR DEL CARRITO Y TRAER LOS PRODUCTOS ASOCIADOS
+    this.count = this._cartService.getCountProducts;
+    this.tortasCarrito = this._cartService.getProducts;
   }
 }
 

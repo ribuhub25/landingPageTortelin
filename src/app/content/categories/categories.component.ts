@@ -14,6 +14,7 @@ import { CartService } from '../../Services/cart.service';
 import { ITortaDetail } from '../../Services/models/cart.interface';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatBadgeModule } from '@angular/material/badge';
+import { ListTortasCartComponent } from '../common/list-tortas-cart/list-tortas-cart.component';
 
 @Component({
   selector: 'app-categories',
@@ -30,13 +31,15 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatButtonModule,
     NavBarComponent,
     AsyncPipe,
-    CommonModule
+    CommonModule,
+    ListTortasCartComponent,
   ],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })
 export default class CategoriesComponent implements OnInit {
   constructor(private route: ActivatedRoute) {}
+  private readonly _cartService = inject(CartService);
   dataCategoria: ICategoria[] = [
     {
       id: 1,
@@ -215,6 +218,10 @@ export default class CategoriesComponent implements OnInit {
   isClosedDetail: boolean = false;
   tortaId: number | null = null;
 
+  count = 0;
+  tortasCarrito: ITortaDetail[] = [];
+  drawer: MatDrawer | null = null;
+  drawer2: MatDrawer | null = null;
   onGetTortasByCategory(categoryId: number) {
     this.categoryStrId = null;
     this.categoryStr = undefined;
@@ -268,43 +275,13 @@ export default class CategoriesComponent implements OnInit {
       });
       this.lblCategory = this.categoryStrId.split('-').join(' ');
     }
-    //SERVICIO
-    this._cartService.cartObservable$.subscribe({
-      next: (number) => {
-        this.count = number;
-      },
-    });
-    this._cartService.tortasObservable$.subscribe({
-      next: (tortaDetail) => {
-        this.tortasSeleccionados = tortaDetail;
-        console.log(tortaDetail);
-      },
-    });
+    //ACTUALIZAR EL CONTADOR DEL CARRITO Y TRAER LOS PRODUCTOS ASOCIADOS
+    this.count = this._cartService.getCountProducts;
+    this.tortasCarrito = this._cartService.getProducts;
   }
-  drawer: MatDrawer | null = null;
-  drawer2: MatDrawer | null = null;
+  //FUNCION PARA EL MOSTRAR EL CARRITO DE COMPRAS
   functionShowCart() {
     this.drawer?.toggle();
     this.drawer2?.toggle(false);
-  }
-
-  //SERVICIO
-  private readonly _cartService = inject(CartService);
-
-  count = 0;
-  tortasSeleccionados: ITortaDetail[] = [];
-
-  onClickAdd(torta: ITortaDetail) {
-    this._cartService.addProductfromButton(torta);
-  }
-  onClickDelete(index: number) {
-    this._cartService.deleteProduct(index);
-  }
-  onClickReset(torta: ITortaDetail) {
-    this._cartService.resetProduct(torta);
-  }
-  onClickClear() {
-    //this._cartService.productsObservable$.unsubscribe();
-    this._cartService.clearAll();
   }
 }

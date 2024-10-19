@@ -1,7 +1,8 @@
-<app-nav-bar [drawer]="drawer" [drawer2]="drawer2"></app-nav-bar>
+<app-nav-bar [drawer]="drawer" [drawer2]="drawer2" [count]="count"></app-nav-bar>
 <mat-drawer-container class="example-container">
+
   <mat-drawer #drawer2 class="categories-container" mode="side" opened>
-    <h5>CATEGORIAS</h5>
+    <h6 class="fw-bold">CATEGORIAS</h6>
     <mat-list role="list">
       @for(category of dataCategoria; track category.id){
       <a
@@ -44,7 +45,7 @@
     </mat-list>
   </mat-drawer>
   <mat-drawer #drawer class="hijo-sidenav" mode="side" position="end">
-    <p>Auto-resizing sidenav</p>
+    <app-list-tortas-cart [tortasSeleccionados]="tortasCarrito"/>
   </mat-drawer>
   <mat-drawer-content>
     <div class="d-flex justify-content-start gap-2">
@@ -75,7 +76,7 @@
         <img
           src="{{ tortaDetail?.img }}"
           alt="image{{ tortaDetail?.id }}"
-          width="90%"
+          width="80%"
         />
       </div>
       <div class="col-3">
