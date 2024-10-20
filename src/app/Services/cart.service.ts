@@ -15,6 +15,13 @@ export class CartService {
   tortasObservable$ = new Subject<ITortaDetail[]>();
   totalObservable$ = new BehaviorSubject<number>(0);
 
+
+  get getCountProducts() {
+    return this._count;
+  }
+  get getProducts() {
+    return this._tortasDetail;
+  }
   addToCard(torta: ITorta) {
     const idTorta = torta.id;
     const index = this._tortasDetail.findIndex(
@@ -30,7 +37,6 @@ export class CartService {
       this._updateProduct(index);
     }
   }
-
   addProductfromButton(torta: ITortaDetail) {
     torta.count = torta.count + 1;
     torta.total = torta.count * torta.torta.price;

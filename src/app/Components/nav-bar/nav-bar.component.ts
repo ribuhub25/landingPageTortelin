@@ -1,6 +1,7 @@
 import {
   Component,
   ElementRef,
+  inject,
   Input,
   QueryList,
   ViewChild,
@@ -12,6 +13,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatDrawer } from '@angular/material/sidenav';
 import { CommonModule } from '@angular/common';
+import { CartService } from '../../Services/cart.service';
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
@@ -24,7 +26,9 @@ export class NavBarComponent {
   // myCallbackFunction = (): void => {
   //   alert('hola');
   // };
-  count = 0;
+  //SERVICIO
+  private readonly _cartService = inject(CartService);
+  @Input() count = 0;
   isActive = false;
   path: string | undefined = '';
   ngOnInit(): void {
@@ -34,6 +38,13 @@ export class NavBarComponent {
     if (this.path) {
       this.isActive = true;
     }
+
+    //ACTUALIZAR CARRITO
+    this._cartService.cartObservable$.subscribe({
+      next: (number) => {
+        this.count = number;
+      },
+    });
   }
 
   //CONFIGURACIÓN PARA EL BOTON CARRITO DE COMPRAS

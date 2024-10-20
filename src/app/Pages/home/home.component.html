@@ -1,8 +1,8 @@
-<app-nav-bar [drawer]="drawer"></app-nav-bar>
+<app-nav-bar [drawer]="drawer" [count]="count"></app-nav-bar>
 
 <mat-drawer-container class="example-container">
   <mat-drawer #drawer class="hijo-sidenav" mode="side" position="end">
-    <p>Auto-resizing sidenav</p>
+    <app-list-tortas-cart [count]="count" [tortasSeleccionados]="tortasCarrito" />
   </mat-drawer>
   <mat-drawer-content>
     Holaaa

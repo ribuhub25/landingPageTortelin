@@ -3,46 +3,7 @@
 
   <mat-drawer #drawer2 class="categories-container" mode="side" opened>
     <h6 class="fw-bold">CATEGORIAS</h6>
-    <mat-list role="list">
-      @for(category of dataCategoria; track category.id){
-      <a
-        [routerLink]="[
-          '/catalogo' + '/' + category.name.split(' ').join('-').toLowerCase()
-        ]"
-        (click)="onGetTortasByCategory(category.id)"
-      >
-        <h6>{{ category.name }}</h6>
-      </a>
-      @if(category.id == categoryId ){ @for(torta of tortasByCategory; track
-      torta.id){
-      <a
-        [routerLink]="[
-          '/catalogo/' +
-            category.name.split(' ').join('-').toLowerCase() +
-            '/' +
-            torta.name.split(' ').join('-').toLowerCase()
-        ]"
-        (click)="onGetTortaDetail(torta.id)"
-        ><mat-list-item role="listitem">
-          <span matListItemTitle>{{ torta.name }}</span>
-        </mat-list-item>
-      </a>
-      } }@else { @if(category.id == categoryStr){ @for(torta of
-      tortasByCategory; track torta.id){
-      <a
-        [routerLink]="[
-          '/catalogo/' +
-            category.name.split(' ').join('-').toLowerCase() +
-            '/' +
-            torta.name.split(' ').join('-').toLowerCase()
-        ]"
-        (click)="onGetTortaDetail(torta.id)"
-        ><mat-list-item role="listitem">
-          <span matListItemTitle>{{ torta.name }}</span>
-        </mat-list-item>
-      </a>
-      } } } }
-    </mat-list>
+    <app-list-categories [tortasByCategory]="tortasByCategory" [categoryId]="categoryId" [tortaId]="tortaId"></app-list-categories>
   </mat-drawer>
   <mat-drawer #drawer class="hijo-sidenav" mode="side" position="end">
     <app-list-tortas-cart [tortasSeleccionados]="tortasCarrito"/>
@@ -61,8 +22,8 @@
         </button>
       </div>
       <div class="pt-2"><app-breadcrumb
-      [category]="lblCategory"
-      [torta]="lblTorta"
+      [category]="categoryBreadCrumb"
+      [torta]="tortaBreadCrumb"
     ></app-breadcrumb></div>
     </div>
     <div class="row justify-content-center">

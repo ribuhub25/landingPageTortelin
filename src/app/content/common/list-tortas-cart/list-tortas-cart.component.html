@@ -1,4 +1,4 @@
-<mat-list style="text-align: center; max-width: 35vw; font-size: small;">
+<mat-list style="text-align: center; max-width: 50vw; font-size: small;">
   <div mat-subheader><b>Productos seleccionados</b></div>
   <div
     style="
@@ -8,7 +8,7 @@
       justify-content: center;
     "
   >
-    <div mat-subheader>Total Productos: {{ count }}</div>
+    <div mat-subheader>Tortas: <span>{{ count }}</span></div>
     <div mat-subheader><app-total /></div>
     <button mat-button color="primary" (click)="onClickClear()">
       Clear All

@@ -1,8 +1,9 @@
-<app-nav-bar [drawer]="drawer" [drawer2]="drawer2"></app-nav-bar>
+<app-nav-bar [drawer]="drawer" [drawer2]="drawer2" [count]="count"></app-nav-bar>
 <mat-drawer-container class="example-container">
   <mat-drawer mode="side" #drawer2 class="categories-container" opened>
     <h6 class="fw-bold">CATEGORIAS</h6>
-    <mat-list role="list">
+    <app-list-categories [categoryId]="0" [tortaId]="0"></app-list-categories>
+    <!-- <mat-list role="list">
       @for(category of dataCategoria; track category.id){
       <a [routerLink]="['/catalogo', category.name.split(' ').join('-').toLowerCase()]" (click)="onGetTortasByCategory(category.id)">
         <h6>{{ category.name }}</h6>
@@ -14,10 +15,10 @@
         </a>
        }
       }
-    </mat-list>
+    </mat-list> -->
   </mat-drawer>
   <mat-drawer #drawer class="hijo-sidenav" mode="side" position="end">
-    <p>Auto-resizing sidenav</p>
+    <app-list-tortas-cart [tortasSeleccionados]="tortasSeleccionados" />
   </mat-drawer>
   <mat-drawer-content>
     <div class="d-flex justify-content-start gap-2">
@@ -33,8 +34,6 @@
         </button>
       </div>
       <div class="pt-2"><app-breadcrumb
-      [category]="lblCategory"
-      [torta]="lblTorta"
     ></app-breadcrumb></div>
     </div>
   </mat-drawer-content>

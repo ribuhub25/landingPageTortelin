@@ -15,6 +15,8 @@ import { ITortaDetail } from '../../Services/models/cart.interface';
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { MatBadgeModule } from '@angular/material/badge';
 import { ListTortasCartComponent } from '../common/list-tortas-cart/list-tortas-cart.component';
+import { ListCategoriesComponent } from '../common/list-categories/list-categories.component';
+import { CategoryService } from '../../Services/category.service';
 
 @Component({
   selector: 'app-categories',
@@ -33,248 +35,47 @@ import { ListTortasCartComponent } from '../common/list-tortas-cart/list-tortas-
     AsyncPipe,
     CommonModule,
     ListTortasCartComponent,
+    ListCategoriesComponent,
   ],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })
 export default class CategoriesComponent implements OnInit {
-  constructor(private route: ActivatedRoute) {}
   private readonly _cartService = inject(CartService);
-  dataCategoria: ICategoria[] = [
-    {
-      id: 1,
-      name: 'Chocotones',
-      description:
-        'Experiencia y conocimiento en el rubro de la pastelería, con la especialidad en tortas para todas ocación.',
-    },
-    {
-      id: 2,
-      name: 'Tortas de Keke de chocolate',
-      description:
-        'Experiencia y conocimiento en el rubro de la pastelería, con la especialidad en tortas para todas ocación.',
-    },
-    {
-      id: 3,
-      name: 'Tortas de Keke de vainilla',
-      description:
-        'Experiencia y conocimiento en el rubro de la pastelería, con la especialidad en tortas para todas ocación.',
-    },
-    {
-      id: 4,
-      name: 'Tortas de Keke de fresa y otros',
-      description:
-        'Experiencia y conocimiento en el rubro de la pastelería, con la especialidad en tortas para todas ocación.',
-    },
-    {
-      id: 5,
-      name: 'Tortas de Biscochuelo',
-      description:
-        'Experiencia y conocimiento en el rubro de la pastelería, con la especialidad en tortas para todas ocación.',
-    },
-  ];
-  dataTorta: ITorta[] = [
-    {
-      id: 1,
-      name: 'Tres leches de chocolate',
-      img: 'asset/tres_leches_chocolate.jpg',
-      price: 42,
-      status: 1,
-      categoryId: 2,
-      description:
-        'Suave bizcocho de chocolate húmedo, bañado en dulcerío de tres leches y cubierto con chantilly de chocolate',
-    },
-    {
-      id: 2,
-      name: 'Torta de Chocolate',
-      img: 'asset/torta_chocolate.jpg',
-      price: 38,
-      status: 1,
-      categoryId: 2,
-      description:
-        'Suave bizcocho de chocolate húmedo, bañado en dulcerío de tres leches y cubierto con chantilly de chocolate',
-    },
-    {
-      id: 3,
-      name: 'Torta Lucuma',
-      img: 'asset/torta_lucuma.jpg',
-      price: 40,
-      status: 1,
-      categoryId: 2,
-      description:
-        'Suave bizcocho de chocolate húmedo, bañado en dulcerío de tres leches y cubierto con chantilly de chocolate',
-    },
-    {
-      id: 4,
-      name: 'Torta Moka',
-      img: 'asset/torta_moka.jpg',
-      price: 38,
-      status: 1,
-      categoryId: 2,
-      description:
-        'Suave bizcocho de chocolate húmedo, bañado en dulcerío de tres leches y cubierto con chantilly de chocolate',
-    },
-    {
-      id: 5,
-      name: 'Torta Selva Blanca',
-      img: 'asset/selva_negra2.jpg',
-      price: 42,
-      status: 1,
-      categoryId: 2,
-      description:
-        'Suave bizcocho de chocolate húmedo, bañado en dulcerío de tres leches y cubierto con chantilly de chocolate',
-    },
-    {
-      id: 6,
-      name: 'Torta de Sandia',
-      img: 'asset/sauco.jpg',
-      price: 38,
-      status: 1,
-      categoryId: 2,
-      description:
-        'Suave bizcocho de chocolate húmedo, bañado en dulcerío de tres leches y cubierto con chantilly de chocolate',
-    },
-    {
-      id: 7,
-      name: 'Torta Selva Negra',
-      img: 'asset/selva_negra.jpg',
-      price: 42,
-      status: 1,
-      categoryId: 2,
-      description:
-        'Suave bizcocho de chocolate húmedo, bañado en dulcerío de tres leches y cubierto con chantilly de chocolate',
-    },
-    {
-      id: 8,
-      name: 'Torta Tres Leches de Moka',
-      img: 'asset/tres_leches_moka.jpg',
-      price: 42,
-      status: 1,
-      categoryId: 2,
-      description:
-        'Suave bizcocho de chocolate húmedo, bañado en dulcerío de tres leches y cubierto con chantilly de chocolate',
-    },
-    {
-      id: 9,
-      name: 'Torta de Sauco',
-      img: 'asset/sauco.jpg',
-      price: 38,
-      status: 1,
-      categoryId: 2,
-      description:
-        'Suave bizcocho de chocolate húmedo, bañado en dulcerío de tres leches y cubierto con chantilly de chocolate',
-    },
-    {
-      id: 10,
-      name: 'Torta Tres Leches de Lúcuma',
-      img: 'asset/tres_leches_lucuma.jpg',
-      price: 42,
-      status: 1,
-      categoryId: 2,
-      description:
-        'Suave bizcocho de chocolate húmedo, bañado en dulcerío de tres leches y cubierto con chantilly de chocolate',
-    },
-    {
-      id: 11,
-      name: 'Torta de Albaricoque',
-      img: 'asset/tres_leches_lucuma.jpg',
-      price: 38,
-      status: 1,
-      categoryId: 3,
-      description:
-        'Suave bizcocho de chocolate húmedo, bañado en dulcerío de tres leches y cubierto con chantilly de chocolate',
-    },
-    {
-      id: 12,
-      name: 'Torta de Coco',
-      img: 'asset/tres_leches_lucuma.jpg',
-      price: 38,
-      status: 1,
-      categoryId: 3,
-      description:
-        'Suave bizcocho de chocolate húmedo, bañado en dulcerío de tres leches y cubierto con chantilly de chocolate',
-    },
-    {
-      id: 13,
-      name: 'Torta de Mango',
-      img: 'asset/tres_leches_lucuma.jpg',
-      price: 40,
-      status: 1,
-      categoryId: 3,
-      description:
-        'Suave bizcocho de chocolate húmedo, bañado en dulcerío de tres leches y cubierto con chantilly de chocolate',
-    },
-  ];
+  private readonly _categoryService = inject(CategoryService);
   tortasByCategory: ITorta[] = [];
   categoryId: number | null = null;
-  categoryStrId: string | null = null;
-  categoryStr: number | undefined = 0;
-  isClosed: boolean = false;
-  lblCategory: string = '';
-  txtDesCategory: string = '';
-  lblTorta: string = '';
-  txtDesTorta: string = '';
-  txtPriceTorta: number = 0;
-  txtImageTorta: string = '';
-  isClosedDetail: boolean = false;
   tortaId: number | null = null;
-
-  count = 0;
+  categoryBreadCrumb: string = "";
+  count:number = 0;
   tortasCarrito: ITortaDetail[] = [];
   drawer: MatDrawer | null = null;
   drawer2: MatDrawer | null = null;
+
   onGetTortasByCategory(categoryId: number) {
-    this.categoryStrId = null;
-    this.categoryStr = undefined;
-    this.tortasByCategory = this.dataTorta.filter((t) => {
-      return t.categoryId === categoryId;
-    });
-    //Guarda el valor de categoryId,sirve para luego verificar si hay algun cambio a otra categoryId
-    this.categoryId = categoryId;
-    this.lblCategory = this.dataCategoria.find((c) => {
-      return c.id == categoryId;
-    })!.name;
-    this.txtDesCategory = this.dataCategoria.find((c) => {
-      return c.id == categoryId;
-    })!.description;
+    this._categoryService.GetTortasByCategory(categoryId);
   }
   onGetTortaDetail(tortaId: number | null) {
-    if (this.isClosedDetail && this.tortaId == tortaId) {
-      this.isClosedDetail = false;
-    } else {
-      this.isClosedDetail = true;
-    }
-    //Guarda el valor de tortaId,sirve para luego verificar si hay algun cambio a otra tortaId
-    this.tortaId = tortaId;
-    if (tortaId) {
-      this.lblTorta = this.dataTorta.find((t) => {
-        return t.id == tortaId;
-      })!.name;
-      this.txtDesTorta = this.dataTorta.find((t) => {
-        return t.id == tortaId;
-      })!.description;
-      this.txtPriceTorta = this.dataTorta.find((t) => {
-        return t.id == tortaId;
-      })!.price;
-      this.txtImageTorta = this.dataTorta.find((t) => {
-        return t.id == tortaId;
-      })!.img;
-    } else {
-      this.lblTorta = '';
-    }
+    this._categoryService.GetDetailOfTorta(tortaId);
   }
   ngOnInit(): void {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    this.categoryStrId = this.route.snapshot.paramMap.get('category');
-    this.categoryStr = this.dataCategoria.find((c) => {
-      return c.name.split(' ').join('-').toLowerCase() == this.categoryStrId;
-    })!.id;
-    if (this.categoryStrId) {
-      this.tortasByCategory = this.dataTorta.filter((t) => {
-        return t.categoryId == this.categoryStr;
-      });
-      this.lblCategory = this.categoryStrId.split('-').join(' ');
-    }
+    //ACTUALIZAR LAS TORTAS POR CATEGORIA
+    this._categoryService.tortasCategoryObservable$.subscribe({
+      next: (tortas) => {
+        this.tortasByCategory = tortas;
+      },
+    });
+    //ACTUALIZAR LA CATEGORIA_BREADCRUMB
+    this._categoryService.categoryBreadCrumbObservable$.subscribe({
+      next: (categoryName) => {
+        this.categoryBreadCrumb = categoryName;
+      },
+    });
+    //TRAER AL INICIO LOS VALORES DE...
+    this.categoryId = this._categoryService.getCategoryId;
+    this.tortaId = this._categoryService.getTortaId;
+    this.categoryBreadCrumb = this._categoryService.getCategoryName;
+    this.tortasByCategory = this._categoryService.getTortasByCategory;
     //ACTUALIZAR EL CONTADOR DEL CARRITO Y TRAER LOS PRODUCTOS ASOCIADOS
     this.count = this._cartService.getCountProducts;
     this.tortasCarrito = this._cartService.getProducts;
