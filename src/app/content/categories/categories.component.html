@@ -31,7 +31,7 @@
       <snap-card
         [torta]="crd"
         [categoryName]="categoryBreadCrumb"
-        (cardEmitter)="onGetTortaDetail($event)"
+        (cardEmitter)="onGetTortaDetail(crd.id)"
       ></snap-card>
       }
     </div>

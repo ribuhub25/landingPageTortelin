@@ -10,8 +10,8 @@
       {{description}}
     </p> -->
     <div class="text-center">
-      <mat-card-title><a [routerLink]="['/catalogo'+ '/'+categoryName.split(' ').join('-').toLowerCase()+'/'+torta?.name]" (click)="this.cardEmitter.emit(this.id)">{{torta?.name}}</a></mat-card-title>
-      <div class="pt-2"><a [routerLink]="['/catalogo'+ '/'+categoryName.split(' ').join('-').toLowerCase()+'/'+torta?.name]" (click)="this.cardEmitter.emit(this.id)">Desde: {{torta?.price| currency:'S/.' }}</a></div>
+      <mat-card-title><a [routerLink]="['/catalogo'+ '/'+categoryName+'/'+torta?.name!.split(' ').join('-').toLowerCase()]" (click)="this.cardEmitter.emit(this.id)">{{torta?.name}}</a></mat-card-title>
+      <div class="pt-2"><a [routerLink]="['/catalogo'+ '/'+categoryName+'/'+torta?.name!.split(' ').join('-').toLowerCase()]" (click)="this.cardEmitter.emit(this.id)">Desde: {{torta?.price| currency:'S/.' }}</a></div>
     </div>
   </mat-card-content>
   <mat-card-actions>

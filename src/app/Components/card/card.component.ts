@@ -18,19 +18,18 @@ export class CardComponent implements OnInit {
   @Input() id = 0;
   @Input() description = '';
   @Input({ transform: upperText }) type = '';
-  @Input() categoryName = '';
+  @Input({ transform: formatParamUri }) categoryName = '';
 
   @Output() childEmitter = new EventEmitter<string>();
-  childEmitterFromOutput = output<string>();
+  // childEmitterFromOutput = output<string>();
   cardEmitter = output<number>();
-  isValid = false;
 
   handleSubmit(e: number) {
     alert(`se seleccionó el ID: ${e}`);
   }
   ngOnInit(): void {
-    this.childEmitter.emit(`${this.type},${this.id}`);
-    this.childEmitterFromOutput.emit(`${this.type},${this.id}`);
+    // this.childEmitter.emit(`${this.type},${this.id}`);
+    // this.childEmitterFromOutput.emit(`${this.type},${this.id}`);
   }
 
   //BUTTON CARRITO
@@ -44,4 +43,7 @@ export class CardComponent implements OnInit {
 
 function upperText(text: string | undefined) {
   return text?.toUpperCase() ?? '';
+}
+function formatParamUri(text:string) {
+  return text.split(' ').join('-').toLowerCase();
 }
