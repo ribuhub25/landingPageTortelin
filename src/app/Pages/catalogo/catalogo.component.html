@@ -1,7 +1,6 @@
 <app-nav-bar [drawer]="drawer" [drawer2]="drawer2" [count]="count"></app-nav-bar>
 <mat-drawer-container class="example-container">
   <mat-drawer mode="side" #drawer2 class="categories-container" opened>
-    <h6 class="fw-bold">CATEGORIAS</h6>
     <app-list-categories [categoryId]="0" [tortaId]="0"></app-list-categories>
     <!-- <mat-list role="list">
       @for(category of dataCategoria; track category.id){

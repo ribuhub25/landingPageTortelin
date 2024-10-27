@@ -1,27 +1,54 @@
-<mat-list role="list">
-      @for(category of dataCategoria; track category.id){
-      <a
-        [routerLink]="[
-          '/catalogo/' + category.name.split(' ').join('-').toLowerCase()
-        ]"
-        (click)="onGetTortasByCategory(category.id)"
-      >
-        <h6>{{ category.name }}</h6>
-      </a>
-      @if(tortasByCategory.length && category.id == categoryId){
-        @for(torta of tortasByCategory; track torta.id){
-      <a
-        [routerLink]="[
-          '/catalogo/' +
-            category.name.split(' ').join('-').toLowerCase() +
-            '/' +
-            torta.name.split(' ').join('-').toLowerCase()
-        ]"
-        (click)="onGetTortaDetail(torta.id)"
-        ><mat-list-item role="listitem">
-          <span matListItemTitle>{{ torta.name }}</span>
-        </mat-list-item>
-      </a>
-      } }
-      }
+
+<div class="card py-2 mb-2">
+  <div class="card-body">
+    <h6 class="fw-bold text-center">Filtrar por Precio</h6>
+    <mat-divider></mat-divider>
+    <app-filter-price [priceMax]="priceMax" [priceMin]="priceMin"></app-filter-price>
+  </div>
+</div>
+<div class="card py-2">
+  <div class="card-body">
+    <h6 class="fw-bold text-center">Categorias del Producto</h6>
+    <mat-divider></mat-divider>
+    <mat-list role="list">
+          @for(category of dataCategoria; track category.id){
+          <a
+            [routerLink]="[
+              '/catalogo/' + category.name.split(' ').join('-').toLowerCase()
+            ]"
+            (click)="onGetTortasByCategory(category.id)"
+          >
+          <mat-list-item matListItemTitle role="listitem">
+            <div class="d-flex justify-content-between pt-2">
+              <div>{{ category.name }}</div>
+              @if(category.name.split(' ').join('-').toLowerCase() == categorySelected){
+                <div [ngClass]="{'d-none': isCheked }" #categorySelected>
+                  <app-check-icon icono="check_circle"></app-check-icon>
+                </div>
+              }
+            </div>
+            </mat-list-item>
+            @if(category.id != dataCategoria[dataCategoria.length-1].id){
+              <mat-divider></mat-divider>
+            }
+          </a>
+          @if(tortasByCategory.length && category.id == categoryId){
+            @for(torta of tortasByCategory; track torta.id){
+          <a
+            [routerLink]="[
+              '/catalogo/' +
+                category.name.split(' ').join('-').toLowerCase() +
+                '/' +
+                torta.name.split(' ').join('-').toLowerCase()
+            ]"
+            (click)="onGetTortaDetail(torta.id)"
+            ><mat-list-item class="pt-2">
+                <div matListItemTitle>{{ torta.name }}</div>
+                <app-check-icon icono="cake" matListItemIcon></app-check-icon>
+            </mat-list-item>
+          </a>
+          } }
+          }
     </mat-list>
+  </div>
+</div>

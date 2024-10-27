@@ -17,6 +17,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { ListTortasCartComponent } from '../common/list-tortas-cart/list-tortas-cart.component';
 import { ListCategoriesComponent } from '../common/list-categories/list-categories.component';
 import { CategoryService } from '../../Services/category.service';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-categories',
@@ -36,21 +37,28 @@ import { CategoryService } from '../../Services/category.service';
     CommonModule,
     ListTortasCartComponent,
     ListCategoriesComponent,
+    MatProgressSpinnerModule,
   ],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })
 export default class CategoriesComponent implements OnInit {
+  constructor(private route: ActivatedRoute) {
+
+  }
   private readonly _cartService = inject(CartService);
   private readonly _categoryService = inject(CategoryService);
   tortasByCategory: ITorta[] = [];
   categoryId: number | null = null;
   tortaId: number | null = null;
-  categoryBreadCrumb: string = "";
-  count:number = 0;
+  categoryBreadCrumb: string = '';
+  count: number = 0;
   tortasCarrito: ITortaDetail[] = [];
   drawer: MatDrawer | null = null;
   drawer2: MatDrawer | null = null;
+  isCheked: boolean = true;
+  categorySelected: string = "";
+
 
   onGetTortasByCategory(categoryId: number) {
     this._categoryService.GetTortasByCategory(categoryId);
@@ -69,6 +77,11 @@ export default class CategoriesComponent implements OnInit {
     this._categoryService.categoryBreadCrumbObservable$.subscribe({
       next: (categoryName) => {
         this.categoryBreadCrumb = categoryName;
+        //MOSTRAR ICONO DE CATEGORIA SELECCIONADA
+        this.isCheked = categoryName ? false : true;
+        this.categorySelected = categoryName
+          ? categoryName.split(' ').join('-').toLowerCase()
+          : '';
       },
     });
     //TRAER AL INICIO LOS VALORES DE...
@@ -79,6 +92,7 @@ export default class CategoriesComponent implements OnInit {
     //ACTUALIZAR EL CONTADOR DEL CARRITO Y TRAER LOS PRODUCTOS ASOCIADOS
     this.count = this._cartService.getCountProducts;
     this.tortasCarrito = this._cartService.getProducts;
+
   }
   //FUNCION PARA EL MOSTRAR EL CARRITO DE COMPRAS
   functionShowCart() {

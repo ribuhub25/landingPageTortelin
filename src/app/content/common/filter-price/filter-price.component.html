@@ -1,0 +1,10 @@
+<mat-slider [min]="priceMin" [max]="priceMax">
+  <input [(value)]="priceVarMin" matSliderStartThumb>
+  <input [(value)]="priceVarMax" matSliderEndThumb>
+</mat-slider>
+<div class="text-center pb-3">
+  Precio: <span>{{priceVarMin | currency:'S/.'}} - {{priceVarMax | currency:'S/.'}}</span>
+</div>
+<div class="text-center">
+  <button mat-fab extended>FILTRAR</button>
+</div>

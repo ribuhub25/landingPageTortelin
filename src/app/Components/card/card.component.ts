@@ -20,7 +20,7 @@ export class CardComponent implements OnInit {
   @Input({ transform: upperText }) type = '';
   @Input({ transform: formatParamUri }) categoryName = '';
 
-  @Output() childEmitter = new EventEmitter<string>();
+  // @Output() childEmitter = new EventEmitter<string>();
   // childEmitterFromOutput = output<string>();
   cardEmitter = output<number>();
 
