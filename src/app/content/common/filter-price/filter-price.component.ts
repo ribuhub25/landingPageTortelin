@@ -12,11 +12,14 @@ import { FilterService } from '../../../Services/filter.service';
 })
 export class FilterPriceComponent {
   private readonly _filterService = inject(FilterService);
-  @ViewChild("btnFilter") btnFilter: ElementRef | undefined;
-  @Input({ required: true }) priceMin: number = 0;
+  @ViewChild('btnFilterRef', { static: true, read: ElementRef })
+  btnFilter!: ElementRef<HTMLButtonElement>;
+  @Input({ required: true })
+  priceMin: number = 0;
   @Input({ required: true }) priceMax: number = 0;
   priceVarMax: number = 0;
   priceVarMin: number = 0;
+
   FilterTortas(pMax: number, pMin: number) {
     this._filterService.filterTortasByPrice(pMax, pMin);
   }
@@ -35,6 +38,7 @@ export class FilterPriceComponent {
     this.priceMin = this._filterService.getPriceMin;
     this.priceVarMax = this.priceMax;
     this.priceVarMin = this.priceMin;
-    console.log(this.priceMax, this.priceMin);
+
+
   }
 }

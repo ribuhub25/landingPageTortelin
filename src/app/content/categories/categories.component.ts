@@ -49,6 +49,10 @@ export default class CategoriesComponent implements OnInit {
   private readonly _cartService = inject(CartService);
   private readonly _categoryService = inject(CategoryService);
   private readonly _filterService = inject(FilterService);
+  @ViewChild(ListCategoriesComponent, {
+    static: false,
+    read: ListCategoriesComponent,
+  })listCategoriesComponent!: ListCategoriesComponent;
 
   tortasByCategory: ITorta[] = [];
   categoryId: number | null = null;
@@ -61,7 +65,6 @@ export default class CategoriesComponent implements OnInit {
   isCheked: boolean = true;
   categorySelected: string = '';
   tortasFiltered: ITorta[] = [];
-  @ViewChildren(FilterPriceComponent) btnFilter: QueryList<FilterPriceComponent> | undefined;
 
   onGetTortasByCategory(categoryId: number) {
     this._categoryService.GetTortasByCategory(categoryId);
@@ -95,19 +98,18 @@ export default class CategoriesComponent implements OnInit {
     //ACTUALIZAR EL CONTADOR DEL CARRITO Y TRAER LOS PRODUCTOS ASOCIADOS
     this.count = this._cartService.getCountProducts;
     this.tortasCarrito = this._cartService.getProducts;
-
   }
   //FUNCION PARA EL MOSTRAR EL CARRITO DE COMPRAS
   functionShowCart() {
     this.drawer?.toggle();
     this.drawer2?.toggle(false);
   }
-  ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
-    this.btnFilter?.forEach((boton) => {
-      console.log(boton.btnFilter?.nativeElement.id);
-    });
-  }
 
+  ngAfterViewInit(): void {
+    //FILTRADO DE TORTAS CON @VIEWCHILD
+    this.listCategoriesComponent.filterPriceRef.btnFilter.nativeElement.onclick = () => {
+      this.tortasFiltered = this._filterService.getTortasFiltered;
+      this.tortasByCategory = this.tortasFiltered;
+    };
+  }
 }

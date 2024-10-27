@@ -1,4 +1,4 @@
-import { Component, inject, Input, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, Input, ViewChild } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ICategoria } from '../../../models/categoria.interface';
@@ -63,10 +63,13 @@ export class ListCategoriesComponent {
   @Input({ required: true }) tortaId: number | null = null;
   @Input() isCheked: boolean = true;
   @Input() categorySelected: string = '';
+  @ViewChild(FilterPriceComponent, {
+    static: false,
+    read: FilterPriceComponent,
+  })
+  filterPriceRef!: FilterPriceComponent;
   priceMin: number = 0;
   priceMax: number = 0;
-  @ViewChild(FilterPriceComponent) btnFilter:FilterPriceComponent
-  | undefined;
 
   onGetTortasByCategory(categoryId: number) {
     this._filterService.calculatePrices(categoryId);
@@ -103,5 +106,12 @@ export class ListCategoriesComponent {
     this.categorySelected = this.route.snapshot.paramMap.get('category')!;
     this.isCheked = false;
     this.tortasByCategory = this._categoryService.getTortasByCategory;
+  }
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    // this.filterPriceRef.btnFilter.nativeElement.onclick = () => {
+    //   alert("ga");
+    // };
   }
 }

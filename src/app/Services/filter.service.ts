@@ -176,7 +176,7 @@ export class FilterService {
       return t.price >= pMin && t.price <= pMax && t.categoryId == this._categoryId;
     });
     if (tortasfiltered.length == 0) {
-      this._tortasFiltered = this.dataTorta;
+      this._tortasFiltered = [];
     } else {
       this._tortasFiltered = tortasfiltered;
     }
