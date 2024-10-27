@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { ICategoria } from '../../models/categoria.interface';
 import { ITorta } from '../../models/torta.interface';
@@ -18,6 +18,8 @@ import { ListTortasCartComponent } from '../common/list-tortas-cart/list-tortas-
 import { ListCategoriesComponent } from '../common/list-categories/list-categories.component';
 import { CategoryService } from '../../Services/category.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { FilterService } from '../../Services/filter.service';
+import { FilterPriceComponent } from '../common/filter-price/filter-price.component';
 
 @Component({
   selector: 'app-categories',
@@ -43,11 +45,11 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
   styleUrl: './categories.component.scss',
 })
 export default class CategoriesComponent implements OnInit {
-  constructor(private route: ActivatedRoute) {
-
-  }
+  constructor(private route: ActivatedRoute) {}
   private readonly _cartService = inject(CartService);
   private readonly _categoryService = inject(CategoryService);
+  private readonly _filterService = inject(FilterService);
+
   tortasByCategory: ITorta[] = [];
   categoryId: number | null = null;
   tortaId: number | null = null;
@@ -57,8 +59,9 @@ export default class CategoriesComponent implements OnInit {
   drawer: MatDrawer | null = null;
   drawer2: MatDrawer | null = null;
   isCheked: boolean = true;
-  categorySelected: string = "";
-
+  categorySelected: string = '';
+  tortasFiltered: ITorta[] = [];
+  @ViewChildren(FilterPriceComponent) btnFilter: QueryList<FilterPriceComponent> | undefined;
 
   onGetTortasByCategory(categoryId: number) {
     this._categoryService.GetTortasByCategory(categoryId);
@@ -99,4 +102,12 @@ export default class CategoriesComponent implements OnInit {
     this.drawer?.toggle();
     this.drawer2?.toggle(false);
   }
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    this.btnFilter?.forEach((boton) => {
+      console.log(boton.btnFilter?.nativeElement.id);
+    });
+  }
+
 }

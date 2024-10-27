@@ -36,13 +36,13 @@
       </div>
       @if(tortasByCategory.length > 0){
       <div class="d-flex justify-content-center flex-wrap gap-2 py-3">
-        @for(crd of tortasByCategory; track crd.id){
-        <snap-card
-          [torta]="crd"
-          [categoryName]="categoryBreadCrumb"
-          (cardEmitter)="onGetTortaDetail(crd.id)"
-        ></snap-card>
-        }
+      @for(crd of tortasByCategory; track crd.id){
+      <snap-card
+        [torta]="crd"
+        [categoryName]="categoryBreadCrumb"
+        (cardEmitter)="onGetTortaDetail(crd.id)"
+      ></snap-card>
+      }
       </div>
       }
       @else{
