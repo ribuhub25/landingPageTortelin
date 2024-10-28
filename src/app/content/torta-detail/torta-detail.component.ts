@@ -59,10 +59,12 @@ export default class TortaDetailComponent implements OnInit {
   categoryId: number | null = null;
   tortaId: number | null = null;
   tortaDetail: ITorta | null = null;
-  tortaBreadCrumb: string = "";
-  categoryBreadCrumb: string = "";
-  count:number = 0;
+  tortaBreadCrumb: string = '';
+  categoryBreadCrumb: string = '';
+  count: number = 0;
   tortasCarrito: ITortaDetail[] = [];
+  isCheked: boolean = true;
+  categorySelected: string = '';
 
   onGetTortaDetail(tortaId: number | null) {
     this._categoryService.GetDetailOfTorta(tortaId);
@@ -93,6 +95,13 @@ export default class TortaDetailComponent implements OnInit {
     this._categoryService.categoryBreadCrumbObservable$.subscribe({
       next: (categoryName) => {
         this.categoryBreadCrumb = categoryName;
+        //MOSTRAR ICONO DE CATEGORIA SELECCIONADA
+        console.log(categoryName);
+
+        this.isCheked = categoryName ? false : true;
+        this.categorySelected = categoryName
+          ? categoryName.split(' ').join('-').toLowerCase()
+          : '';
         console.log(categoryName);
       },
     });

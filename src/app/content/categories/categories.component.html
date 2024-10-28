@@ -35,6 +35,12 @@
         </div>
       </div>
       @if(tortasByCategory.length > 0){
+        <!-- <div class="d-flex pt-2 justify-content-between" id="div_results">
+          <div class="text-start">Mostrando los {{pageSize}} resultados </div>
+          <div class="">
+            <button class="btn btn-primary">Orden Predeterminado</button>
+          </div>
+        </div> -->
       <div class="d-flex justify-content-center flex-wrap gap-2 py-3">
       @for(crd of tortasByCategory; track crd.id){
       <snap-card
@@ -44,6 +50,7 @@
       ></snap-card>
       }
       </div>
+      <!-- <app-paginate [length]="numResult" [pageSize]="pageSize"></app-paginate> -->
       }
       @else{
         <mat-spinner class="mx-auto h-75"></mat-spinner>

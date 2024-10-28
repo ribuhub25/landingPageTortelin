@@ -13,6 +13,7 @@ export class CategoryService {
   private _tortaDetail: ITorta | null = null;
   private _categoryBreadCrumb: string = '';
   private _tortaBreadCrumb: string = '';
+  private _tortasTop5: ITorta[] = [];
   dataTorta: ITorta[] = [
     {
       id: 1,
@@ -184,6 +185,10 @@ export class CategoryService {
   categoryBreadCrumbObservable$ = new Subject<string>();
   tortaBreadCrumbObservable$ = new Subject<string>();
 
+  get getTortasTop5() {
+    this.GetTortasTop5();
+    return this._tortasTop5;
+  }
   get getTortasByCategory() {
     return this._tortasByCategory;
   }
@@ -257,4 +262,17 @@ export class CategoryService {
     //   this.lblTorta = '';
     // }
   }
+  //GENERATE TOP 5 TORTAS
+  private GetTortasTop5() {
+    var rdIndice = this.getRandomArbitrary(0, this.dataTorta.length);
+    var TortasTop5: ITorta[] = [];
+    for (var i = 0; i < 4; i++){
+      TortasTop5.push(this.dataTorta[i]);
+    }
+    this._tortasTop5 = TortasTop5;
+  }
+  private getRandomArbitrary(min:number, max:number) {
+  return Math.random() * (max - min) + min;
+  }
+
 }

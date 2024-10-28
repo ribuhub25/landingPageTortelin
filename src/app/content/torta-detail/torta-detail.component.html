@@ -2,7 +2,7 @@
 <mat-drawer-container class="example-container">
 
   <mat-drawer #drawer2 class="categories-container" mode="side" opened>
-    <app-list-categories [tortasByCategory]="tortasByCategory" [categoryId]="categoryId" [tortaId]="tortaId"></app-list-categories>
+    <app-list-categories [tortasByCategory]="tortasByCategory" [categoryId]="categoryId" [tortaId]="tortaId" [isCheked]="isCheked" [categorySelected]="categorySelected"></app-list-categories>
   </mat-drawer>
   <mat-drawer #drawer class="hijo-sidenav" mode="side" position="end">
     <app-list-tortas-cart [tortasSeleccionados]="tortasCarrito"/>

@@ -5,7 +5,17 @@
     <app-list-tortas-cart [count]="count" [tortasSeleccionados]="tortasCarrito" />
   </mat-drawer>
   <mat-drawer-content>
-    Holaaa
+    <div class="card col-12 text-center">
+      <div class="card-body">
+        <h4>¡Las Más Pedidas!</h4>
+        <p>Las preferidas por nuestros clientes</p>
+        <div class="d-flex flex-columns justify-content-center gap-3">
+          @for (torta of tortasTop5; track torta.id) {
+            <snap-card [torta]="torta" [categoryName]="GetCategoryName(torta.categoryId)" (cardEmitter)="onGetTortaDetail(torta.id)"></snap-card>
+          }
+        </div>
+      </div>
+    </div>
   </mat-drawer-content>
 </mat-drawer-container>
 

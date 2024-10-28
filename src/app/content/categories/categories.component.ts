@@ -1,4 +1,4 @@
-import { Component, ElementRef, inject, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { Component, ElementRef, inject, OnInit, QueryList, viewChild, ViewChild, ViewChildren } from '@angular/core';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { ICategoria } from '../../models/categoria.interface';
 import { ITorta } from '../../models/torta.interface';
@@ -20,6 +20,7 @@ import { CategoryService } from '../../Services/category.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FilterService } from '../../Services/filter.service';
 import { FilterPriceComponent } from '../common/filter-price/filter-price.component';
+import { PaginateComponent } from "../../Components/paginate/paginate.component";
 
 @Component({
   selector: 'app-categories',
@@ -40,7 +41,8 @@ import { FilterPriceComponent } from '../common/filter-price/filter-price.compon
     ListTortasCartComponent,
     ListCategoriesComponent,
     MatProgressSpinnerModule,
-  ],
+    PaginateComponent
+],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
 })
@@ -52,7 +54,9 @@ export default class CategoriesComponent implements OnInit {
   @ViewChild(ListCategoriesComponent, {
     static: false,
     read: ListCategoriesComponent,
-  })listCategoriesComponent!: ListCategoriesComponent;
+  })
+  listCategoriesComponent!: ListCategoriesComponent;
+  @ViewChild(PaginateComponent, { static: false, read: PaginateComponent }) paginateComponent!: PaginateComponent;
 
   tortasByCategory: ITorta[] = [];
   categoryId: number | null = null;
@@ -65,6 +69,9 @@ export default class CategoriesComponent implements OnInit {
   isCheked: boolean = true;
   categorySelected: string = '';
   tortasFiltered: ITorta[] = [];
+  numResult: number = 0;
+  pageSize: number = 0;
+
 
   onGetTortasByCategory(categoryId: number) {
     this._categoryService.GetTortasByCategory(categoryId);
@@ -107,9 +114,10 @@ export default class CategoriesComponent implements OnInit {
 
   ngAfterViewInit(): void {
     //FILTRADO DE TORTAS CON @VIEWCHILD
-    this.listCategoriesComponent.filterPriceRef.btnFilter.nativeElement.onclick = () => {
-      this.tortasFiltered = this._filterService.getTortasFiltered;
-      this.tortasByCategory = this.tortasFiltered;
-    };
+    this.listCategoriesComponent.filterPriceRef.btnFilter.nativeElement.onclick =
+      () => {
+        this.tortasFiltered = this._filterService.getTortasFiltered;
+        this.tortasByCategory = this.tortasFiltered;
+      };
   }
 }
