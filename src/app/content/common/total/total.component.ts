@@ -14,10 +14,14 @@ export class TotalComponent {
 
   total: number = 0;
   ngOnInit(): void {
+    //TRAYENDO VALOR DEL TOTAL DESDE EL SERVICIO PARA ACTUALIZAR CONFORME SE VAYA AGREGANDO/ELIMINANDO
     this._cartService.totalObservable$.subscribe({
       next: (number) => {
         this.total = number;
       },
     });
+    //USANDO LOCALSTORAGE PARA TRAER EL VALOR DE TOTAL AL INICIO
+    this.total = parseFloat(localStorage.getItem("total")!);
   }
+
 }

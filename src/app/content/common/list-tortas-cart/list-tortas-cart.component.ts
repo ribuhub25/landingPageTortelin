@@ -10,7 +10,15 @@ import { TotalComponent } from "../total/total.component";
 @Component({
   selector: 'app-list-tortas-cart',
   standalone: true,
-  imports: [MatSidenavModule, MatListItem, MatListModule, AsyncPipe, CommonModule, MatButtonModule, TotalComponent],
+  imports: [
+    MatSidenavModule,
+    MatListItem,
+    MatListModule,
+    AsyncPipe,
+    CommonModule,
+    MatButtonModule,
+    TotalComponent,
+  ],
   templateUrl: './list-tortas-cart.component.html',
   styleUrl: './list-tortas-cart.component.scss',
 })
@@ -18,25 +26,25 @@ export class ListTortasCartComponent implements OnInit {
   private readonly _cartService = inject(CartService);
   @Input() tortasSeleccionados: ITortaDetail[] = [];
   @Input() count = 0;
+  total: number = 0;
 
   ngOnInit(): void {
+    console.log(this.total);
+
     //SERVICIO
     this._cartService.tortasObservable$.subscribe({
       next: (tortaDetail) => {
         this.tortasSeleccionados = tortaDetail;
-        console.log(tortaDetail);
       },
     });
     //ACTUALIZAR CARRITO
     this._cartService.cartObservable$.subscribe({
       next: (number) => {
         this.count = number;
-        console.log(this.count);
       },
     });
     this.count = this._cartService.getCountProducts;
   }
-
 
   onClickAdd(torta: ITortaDetail) {
     this._cartService.addProductfromButton(torta);

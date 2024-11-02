@@ -11,9 +11,27 @@ export class CartService {
   private _count = 0;
   private _total = 0;
 
+  private _tortaStr: ITortaDetail[] = [];
+
   cartObservable$ = new Subject<number>();
   tortasObservable$ = new Subject<ITortaDetail[]>();
   totalObservable$ = new BehaviorSubject<number>(0);
+  tortaStrObservable$ = new Subject<ITortaDetail[]>();
+
+  constructor() {
+    const tortasStr = localStorage.getItem("tortasDetail");
+    if (tortasStr) {
+      this._tortasDetail = JSON.parse(tortasStr);
+    }
+    const countStorage = parseInt(localStorage.getItem('count')!);
+    if (countStorage) {
+      this._count = countStorage;
+    }
+    const totalStorage = parseInt(localStorage.getItem('total')!);
+    if (totalStorage) {
+      this._total = totalStorage;
+    }
+  }
 
 
   get getCountProducts() {
@@ -27,14 +45,16 @@ export class CartService {
     const index = this._tortasDetail.findIndex(
       ({ torta }) => torta.id === idTorta
     );
-
     if (index === -1) {
       this._tortasDetail.push({ torta, count: 1, total: torta.price });
+      this._tortaStr.push({ torta, count: 1, total: torta.price });
       this.tortasObservable$.next(this._tortasDetail);
+      localStorage.setItem('tortasDetail', JSON.stringify(this._tortasDetail));
       this._updateCount();
       this._updateTotal();
     } else {
       this._updateProduct(index);
+      localStorage.setItem('tortasDetail', JSON.stringify(this._tortasDetail));
     }
   }
   addProductfromButton(torta: ITortaDetail) {
@@ -43,6 +63,7 @@ export class CartService {
     this._updateCount();
     this._updateTotal();
     this.tortasObservable$.next(this._tortasDetail);
+    localStorage.setItem('tortasDetail', JSON.stringify(this._tortasDetail));
   }
   deleteProduct(index: number) {
     for (let i = 0; i < this._tortasDetail.length; i++) {
@@ -54,6 +75,8 @@ export class CartService {
     this._updateTotal();
     this.cartObservable$.next(this._count);
     this.tortasObservable$.next(this._tortasDetail);
+    localStorage.setItem('tortasDetail', JSON.stringify(this._tortasDetail));
+    localStorage.setItem('count', this._count.toString());
   }
   resetProduct(torta: ITortaDetail) {
     let count = torta.count - 1;
@@ -65,6 +88,10 @@ export class CartService {
     this.cartObservable$.next(this._count);
     this.tortasObservable$.next(this._tortasDetail);
     this.totalObservable$.next(this._total);
+
+    localStorage.setItem('count', this._count.toString());
+    localStorage.setItem('tortasDetail', JSON.stringify(this._tortasDetail));
+    localStorage.setItem('total', this._total.toString());
   }
   clearAll() {
     this._tortasDetail = [];
@@ -83,7 +110,7 @@ export class CartService {
     //Mostrar la data del producto
     this.setCount(index);
     this.setTotal(index);
-    console.log(this._tortasDetail);
+
     this.tortasObservable$.next(this._tortasDetail);
   }
   private setCount(index: number) {
@@ -106,17 +133,20 @@ export class CartService {
 
   private _updateCount() {
     this._count = this._count + 1;
+    //STORAGE
+    localStorage.setItem('count', this._count.toString());
     this.cartObservable$.next(this._count);
   }
 
   private _updateTotal() {
     let totalProd = 0;
     for (let i = 0; i < this._tortasDetail.length; i++) {
-      totalProd =
-        totalProd +
-        this._tortasDetail[i].torta.price * this._tortasDetail[i].count;
+        totalProd =
+          totalProd +
+          this._tortasDetail[i].torta.price * this._tortasDetail[i].count;
     }
     this._total = totalProd;
+    localStorage.setItem('total', this._total.toString());
     this.totalObservable$.next(this._total);
   }
 }
