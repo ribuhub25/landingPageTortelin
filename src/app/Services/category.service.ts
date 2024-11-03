@@ -233,6 +233,15 @@ export class CategoryService {
     this._tortaBreadCrumb = this.dataTorta.find((c) => {
       return c.id == tortaId;
     })!.name;
+
+
+    this._categoryBreadCrumb = this.dataCategoria.find((c) => {
+      return c.id == this.dataTorta.find((t) => {
+      return t.id == tortaId;
+      })!.categoryId;
+    })!.name;
+    console.log(this._categoryBreadCrumb);
+
     this.categoryBreadCrumbObservable$.next(this._categoryBreadCrumb);
     this.tortaBreadCrumbObservable$.next(this._tortaBreadCrumb);
     this.tortaSelectedObservable$.next(this._tortaId!);
@@ -273,6 +282,14 @@ export class CategoryService {
   }
   private getRandomArbitrary(min:number, max:number) {
   return Math.random() * (max - min) + min;
+  }
+
+  TransformCategoryById(category: string) {
+    var categoryId = 0;
+     categoryId = this.dataCategoria.find((t) => {
+       t.name === category;
+     })!.id;
+    return categoryId;
   }
 
 }

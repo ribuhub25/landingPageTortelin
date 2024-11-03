@@ -75,7 +75,6 @@ export default class TortaDetailComponent implements OnInit {
     this._categoryService.tortasCategoryObservable$.subscribe({
       next: (tortas) => {
         this.tortasByCategory = tortas;
-        console.log(this.tortasByCategory);
       },
     });
     //TRAER EL DETALLE DE LAS TORTAS
@@ -88,7 +87,6 @@ export default class TortaDetailComponent implements OnInit {
     this._categoryService.tortaBreadCrumbObservable$.subscribe({
       next: (tortaName) => {
         this.tortaBreadCrumb = tortaName;
-        console.log(tortaName);
       },
     });
     //ACTUALIZAR EL CATEGORY_BREADCRUMB
@@ -107,6 +105,8 @@ export default class TortaDetailComponent implements OnInit {
     });
     //CARGAR AL INICIO LOS VALORES DE...
     this.categoryId = this._categoryService.getCategoryId;
+    console.log(this.categoryId);
+
     this.tortaId = this._categoryService.getTortaId;
     this.tortaDetail = this._categoryService.getTortaDetail;
     this.categoryBreadCrumb = this._categoryService.getCategoryName;

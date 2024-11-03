@@ -53,9 +53,13 @@ export class NavBarComponent {
   ToggleCart() {
     this.drawer.toggle();
     if (this.drawer.opened) {
-      this.drawer2.close();
+      if (this.drawer2) {
+        this.drawer2.close();
+      }
     } else {
-      this.drawer2.open();
+      if (this.drawer2) {
+        this.drawer2.open();
+      }
     }
   }
 }

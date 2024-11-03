@@ -31,14 +31,21 @@ export default class HomeComponent implements OnInit {
   categoryname: string = '';
   onGetTortaDetail(tortaId: number | null) {
     this._categoryService.GetDetailOfTorta(tortaId);
+    //ACTUALIZAR EL CATEGORYID PARA QUE LO RECONOSCA EL HIJO Y SE PUEDA SEGUIR CON EL FLUJO DE HIJO AL PADRE
+    var categoryId = this._categoryService.dataTorta.filter((c) => {
+      return c.id === tortaId;
+    })[0].categoryId;
+    this._categoryService.GetTortasByCategory(categoryId);
   }
-  GetCategoryName(id:number) {
-    var nameC = this._categoryService.dataCategoria.filter(c => {
-      return c.id === id
+  GetCategoryName(id: number) {
+    var nameC = this._categoryService.dataCategoria.filter((c) => {
+      return c.id === id;
     });
     return nameC[0].name;
   }
   ngOnInit(): void {
+
+
     this.count = this._cartService.getCountProducts;
     this.tortasCarrito = this._cartService.getProducts;
     this.tortasTop5 = this._categoryService.getTortasTop5;
