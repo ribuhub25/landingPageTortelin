@@ -1,14 +1,14 @@
 <app-nav-bar [drawer]="drawer" [count]="count"></app-nav-bar>
 <mat-drawer-container class="example-container">
-  <mat-drawer #drawer class="hijo-sidenav" mode="side" position="end">
-    <app-list-tortas-cart [count]="count" [tortasSeleccionados]="tortasCarrito" />
+  <mat-drawer #drawer class="hijo-sidenav" mode="side" position="end" class="mat-drawer">
+    <app-list-tortas-cart [count]="count" [tortasSeleccionados]="tortasCarrito" class="list_cart" />
   </mat-drawer>
   <mat-drawer-content>
     <div class="card col-12 text-center">
       <div class="card-body">
         <h4>¡Las Más Pedidas!</h4>
         <p>Las preferidas por nuestros clientes</p>
-        <div class="d-flex flex-wrap justify-content-center gap-3">
+        <div class="contenedor_cards">
           @for (torta of tortasTop5; track torta.id) {
             <snap-card [torta]="torta" [categoryName]="GetCategoryName(torta.categoryId)" (cardEmitter)="onGetTortaDetail(torta.id)"></snap-card>
           }

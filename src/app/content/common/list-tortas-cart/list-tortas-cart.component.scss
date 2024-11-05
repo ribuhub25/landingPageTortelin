@@ -1,0 +1,27 @@
+.mat-list{
+  text-align: center; 
+  max-width: 50vw; 
+  font-size: small;
+  .container-totales{
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width:800px) {
+  .mat-list{
+    max-width: 100vw; 
+    .title-cart-list{
+      font-size: large;
+    }
+    .container-totales{
+      font-size: 16px;
+      button{
+        font-size: medium;
+      }
+    }
+    
+  }
+}

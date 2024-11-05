@@ -6,3 +6,9 @@
   background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
   background-size: cover;
 }
+
+@media screen and (max-width:800px) {
+  .snap-card{
+    max-width: 80vw;
+  }
+}

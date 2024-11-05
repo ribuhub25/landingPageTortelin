@@ -1,16 +1,24 @@
 <nav class="navbar navbar-light">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">
-      <img
-        src="asset/logo.png"
-        alt=""
-        width="30"
-        height="24"
-        class="d-inline-block align-text-top"
-      />
-      Tortelín
-    </a>
-    <ul class="navbar-nav d-flex flex-row gap-4">
+    <div class="container-header">
+      <a class="navbar-brand" routerLink="/">
+        <img
+          src="asset/logo.png"
+          alt="logo"
+          width="75"
+          height="33"
+          class="d-inline-block align-text-top"
+        />
+      </a>
+      <span class="cart_head">
+          <button mat-icon-button class="favorite-icon" (click)="ToggleCart()">
+          <mat-icon [matBadge]="count" matBadgeColor="accent" aria-hidden="false"
+            >shopping_cart</mat-icon
+          >
+        </button>
+      </span>
+    </div>
+    <ul class="navbar-nav">
       <li class="nav-item">
         <a
           class= "nav-link"
@@ -32,12 +40,12 @@
       <li class="nav-item">
         <a class="nav-link {isActive}" aria-current="page" href="#">Contacto</a>
       </li>
-      <li class="nav-item">
+      <li class="nav-item shopping_cart">
         <a class="nav-link {isActive}" aria-current="page" href="#"
           >Delivery 🚚 971 147 072</a
         >
       </li>
-      <li class="nav-item">
+      <li class="nav-item shopping_cart">
         <button mat-icon-button class="favorite-icon" (click)="ToggleCart()">
           <mat-icon [matBadge]="count" matBadgeColor="accent" aria-hidden="false"
             >shopping_cart</mat-icon
