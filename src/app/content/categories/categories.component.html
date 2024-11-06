@@ -17,7 +17,7 @@
     <app-list-tortas-cart [tortasSeleccionados]="tortasCarrito"/>
   </mat-drawer>
     <mat-drawer-content>
-      <div class="drawer-content">
+      <div class="d-flex justify-content-start gap-2">
         <div class="btn-desplegable">
           <button
             mat-icon-button
@@ -27,7 +27,7 @@
             <mat-icon matBadgeColor="accent" aria-hidden="false">menu</mat-icon>
           </button>
         </div>
-        <div class="breadcrumb pt-2">
+        <div class="pt-2 breadcrumb">
           <app-breadcrumb [category]="categoryBreadCrumb"></app-breadcrumb>
         </div>
       </div>
