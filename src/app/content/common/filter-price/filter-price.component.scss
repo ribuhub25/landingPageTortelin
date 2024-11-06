@@ -2,3 +2,10 @@
 mat-slider {
   width: 17vw;
 }
+
+
+@media screen and (max-width:800px) {
+  .slider{
+    width: 80vw;
+  }
+}

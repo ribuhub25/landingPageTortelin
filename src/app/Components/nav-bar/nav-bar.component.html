@@ -1,6 +1,15 @@
 <nav class="navbar navbar-light">
   <div class="container-fluid">
     <div class="container-header">
+      <span class="btn-head">
+        <button
+          mat-icon-button
+          class="favorite-icon"
+          (click)="drawer2.toggle()"
+        >
+          <mat-icon matBadgeColor="accent" aria-hidden="false">menu</mat-icon>
+        </button>
+      </span>
       <a class="navbar-brand" routerLink="/">
         <img
           src="asset/logo.png"

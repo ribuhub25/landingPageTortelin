@@ -9,7 +9,7 @@
   </mat-drawer>
   <mat-drawer-content>
     <div class="d-flex justify-content-start gap-2">
-      <div>
+      <div class="btn-desplegable">
         <button
           mat-icon-button
           class="favorite-icon"
@@ -20,27 +20,27 @@
           >
         </button>
       </div>
-      <div class="pt-2"><app-breadcrumb
+      <div class="pt-2 breadcrumb"><app-breadcrumb
       [category]="categoryBreadCrumb"
       [torta]="tortaBreadCrumb"
       [categoryId]="categoryId!"
     ></app-breadcrumb></div>
     </div>
-    <div class="row justify-content-center">
+    <div class="container-detail-torta row">
       <div class="col-11 justify-content-center">
         @if(tortaDetail != null){
           <h5>{{ tortaDetail.name }}</h5>
           <p>{{ tortaDetail.description }}</p>
         }
       </div>
-      <div class="col-8">
+      <div class="col-8 img-torta">
         <img
           src="{{ tortaDetail?.img }}"
           alt="image{{ tortaDetail?.id }}"
           width="80%"
         />
       </div>
-      <div class="col-3">
+      <div class="col-3 porciones">
         <div class="d-flex flex-column">
           <div>
             <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">

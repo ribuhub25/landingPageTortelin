@@ -12,3 +12,41 @@
 nav{
   background-color: yellow;
 }
+.container-detail-torta{
+  justify-content: center;
+}
+
+@media screen and (max-width:800px) {
+  .example-container{
+    width: 100vw;
+    .categories-container{
+      width: 100vw;
+    }
+    .hijo-sidenav{
+      width: 100vw;
+    }
+    .drawer-content{
+      display: flex;
+      justify-content: start;
+      gap: 1em;
+    }
+    .btn-desplegable{
+      display: none;
+    }
+    .breadcrumb{
+      display: none;
+    }
+    .container-detail-torta{
+      text-align: center;
+      justify-content: center;
+      .img-torta{
+        width: 100vw;
+      }
+      .porciones{
+        width: 81vw;
+      }
+    }
+
+  }
+
+}
